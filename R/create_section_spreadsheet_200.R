@@ -1,4 +1,4 @@
-#' Create a Google Sheet for a BIO 180 section
+#' Create a Google Sheet for a BIO 200 section
 #'
 #' @inheritParams build_section_spreadsheet_title
 #' @param num_groups The number of groups in the section
@@ -12,9 +12,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' s4 <- create_section_spreadsheet_180(year = 2017, quarter = "WI", section = "C", num_groups = 5, create_group_0 = TRUE, trim = TRUE, ...)
+#' s4 <- create_section_spreadsheet_200(year = 2017, quarter = "WI", section = "C", num_groups = 5, create_group_0 = TRUE, trim = TRUE, ...)
 #' }
-create_section_spreadsheet_180 <- function(year, quarter, section, num_groups, create_group_0 = TRUE, trim = TRUE, ...) {
+create_section_spreadsheet_200 <- function(year, quarter, section, num_groups, create_group_0 = TRUE, trim = TRUE, ...) {
     assertthat::assert_that(assertthat::is.count(year))
     assertthat::assert_that(year > 2016)
     assertthat::assert_that(assertthat::is.string(quarter))
@@ -26,23 +26,28 @@ create_section_spreadsheet_180 <- function(year, quarter, section, num_groups, c
     assertthat::assert_that(assertthat::is.flag(trim))
 
     section_title <- build_section_spreadsheet_title(
-        course = 180,
+        course = 200,
         year = year,
         quarter = quarter,
         section = section
     )
 
+    # TODO: is this right?
     section_data <- tibble::as.tibble(
-            expand.grid(
+        expand.grid(
             Year = year,
             Quarter = toupper(quarter),
             Section = section,
             Group = seq(ifelse(create_group_0, 0, 1), num_groups),
             Anc.or.Des = c("A", "D"),
-            Fitness = as.character("")
+            Cluster = c("I", "II"),
+            Direction = c("F", "R"),
+            Sequence = "",
+            Base.Mutations = "",
+            AA.Mutations = ""
         )
     ) %>%
-        dplyr::arrange_("Group")
+        dplyr::arrange_(c("Group", "Anc.or.Des", "Cluster", "Direction"))
 
     googlesheets::gs_new(
         title = section_title,

@@ -13,7 +13,7 @@ delete_section_spreadsheet(course, year, quarter, section, ...)
 
 \item{quarter}{The quarter. One of: "AU", "WI", "SP", "SU".}
 
-\item{section}{The section name (e.g., "G")}
+\item{section}{The section name (e.g., "G"). Section names are named with a single letter from A-Z. When more than 26 sections exist, subsequent sections are named AA-AZ.}
 
 \item{...}{Additional arguments (ignored)}
 }
@@ -22,4 +22,9 @@ TODO
 }
 \description{
 Delete the Google Sheet for a BIO 180/200 section
+}
+\examples{
+\dontrun{
+delete_section_spreadsheet(course = 180, year = 2017, quarter = "AU", section = "C")
+}
 }

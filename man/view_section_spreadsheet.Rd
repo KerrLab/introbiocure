@@ -16,7 +16,7 @@ view_section_spreadsheet_180(year, quarter, section)
 
 \item{quarter}{The quarter. One of: "AU", "WI", "SP", "SU".}
 
-\item{section}{The section name (e.g., "G")}
+\item{section}{The section name (e.g., "G"). Section names are named with a single letter from A-Z. When more than 26 sections exist, subsequent sections are named AA-AZ.}
 }
 \description{
 Open the Google Sheet for a BIO 180/200 section

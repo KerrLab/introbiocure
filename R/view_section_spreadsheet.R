@@ -1,9 +1,6 @@
 #' Open the Google Sheet for a BIO 180/200 section
 #'
-#' @param course The course number (e.g., 180 or 200)
-#' @param year The year
-#' @param quarter The quarter. One of: "AU", "WI", "SP", "SU".
-#' @param section The section name (e.g., "G")
+#' @inheritParams build_section_spreadsheet_title
 #'
 #' @export
 #'

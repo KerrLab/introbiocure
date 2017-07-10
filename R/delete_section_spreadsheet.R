@@ -1,15 +1,15 @@
 #' Delete the Google Sheet for a BIO 180/200 section
 #'
-#' @param course The course number (e.g., 180 or 200)
-#' @param year The year
-#' @param quarter The quarter. One of: "AU", "WI", "SP", "SU".
-#' @param section The section name (e.g., "G")
+#' @inheritParams build_section_spreadsheet_title
 #' @param ... Additional arguments (ignored)
 #'
 #' @return TODO
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' delete_section_spreadsheet(course = 180, year = 2017, quarter = "AU", section = "C")
+#' }
 delete_section_spreadsheet <- function(course, year, quarter, section, ...) {
     section_title <- build_section_spreadsheet_title(
         course = course,
@@ -18,10 +18,10 @@ delete_section_spreadsheet <- function(course, year, quarter, section, ...) {
         section = section
     )
 
-    sheet <- googlesheets::gs_title(section_title, verbose = FALSE)
-    response <- readline(prompt = sprintf("Are you sure you want to delete '%s'? ('yes' to delete, anything else to cancel): ", section_title))
-
     # Could use gs_vecdel for this.
+    sheet <- googlesheets::gs_title(section_title, verbose = FALSE)
+
+    response <- readline(prompt = sprintf("Are you sure you want to delete '%s'? ('yes' to delete, anything else to cancel): ", section_title))
 
     if (tolower(response) == "yes") {
         googlesheets::gs_delete(sheet)
