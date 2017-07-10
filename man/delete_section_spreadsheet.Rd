@@ -2,13 +2,24 @@
 % Please edit documentation in R/delete_section_spreadsheet.R
 \name{delete_section_spreadsheet}
 \alias{delete_section_spreadsheet}
-\title{Title}
+\title{Delete the Google Sheet for a BIO 180/200 section}
 \usage{
 delete_section_spreadsheet(course, year, quarter, section, ...)
 }
 \arguments{
-\item{...}{}
+\item{course}{The course number (e.g., 180 or 200)}
+
+\item{year}{The year}
+
+\item{quarter}{The quarter. One of: "AU", "WI", "SP", "SU".}
+
+\item{section}{The section name (e.g., "G")}
+
+\item{...}{Additional arguments (ignored)}
+}
+\value{
+TODO
 }
 \description{
-Title
+Delete the Google Sheet for a BIO 180/200 section
 }

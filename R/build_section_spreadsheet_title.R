@@ -1,11 +1,11 @@
-#' Title
+#' Title TODO
 #'
 #' @param course The course number (e.g., 180 or 200)
 #' @param year The year
 #' @param quarter The quarter. One of: "AU", "WI", "SP", "SU".
 #' @param section The section name (e.g., "G")
 #'
-#' @return
+#' @return TODO
 #' @export
 #'
 #' @examples

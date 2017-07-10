@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_section_spreadsheet_title.R
 \name{build_section_spreadsheet_title}
 \alias{build_section_spreadsheet_title}
-\title{Title}
+\title{Title TODO}
 \usage{
 build_section_spreadsheet_title(course, year, quarter, section)
 }
@@ -15,8 +15,11 @@ build_section_spreadsheet_title(course, year, quarter, section)
 
 \item{section}{The section name (e.g., "G")}
 }
+\value{
+TODO
+}
 \description{
-Title
+Title TODO
 }
 \examples{
 build_section_title(180, 2017, "AU", "C")

@@ -1,4 +1,4 @@
-#' Title
+#' Delete the Google Sheet for a BIO 180/200 section
 #'
 #' @param course The course number (e.g., 180 or 200)
 #' @param year The year
@@ -6,7 +6,7 @@
 #' @param section The section name (e.g., "G")
 #' @param ... Additional arguments (ignored)
 #'
-#' @return
+#' @return TODO
 #' @export
 #'
 #' @examples

@@ -3,15 +3,26 @@
 \name{view_section_spreadsheet}
 \alias{view_section_spreadsheet}
 \alias{view_section_spreadsheet_180}
-\title{Open the Google Sheet for a BIO 180 section}
+\title{Open the Google Sheet for a BIO 180/200 section}
 \usage{
 view_section_spreadsheet(course, year, quarter, section)
 
 view_section_spreadsheet_180(year, quarter, section)
 }
 \arguments{
-\item{section}{}
+\item{course}{The course number (e.g., 180 or 200)}
+
+\item{year}{The year}
+
+\item{quarter}{The quarter. One of: "AU", "WI", "SP", "SU".}
+
+\item{section}{The section name (e.g., "G")}
 }
 \description{
-Open the Google Sheet for a BIO 180 section
+Open the Google Sheet for a BIO 180/200 section
+}
+\examples{
+\dontrun{
+view_section_spreadsheet(course = 180, year = 2017, quarter = "AU", section = "C")
+}
 }

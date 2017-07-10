@@ -5,6 +5,7 @@
 #' @param section The section name (e.g., "G")
 #' @param num_groups The number of groups to create
 #' @param create_group_0 Whether or not to create a group 0 for controls (default: TRUE)
+#' @param trim TODO (default: TRUE)
 #' @param ... Additional arguments (ignored)
 #'
 #' @return A \code{\link[googlesheets]{googlesheet}} object
@@ -13,9 +14,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' s4 <- create_section_spreadsheet_180(year = 2017, quarter = "WI", section = "C", num_groups = 5, create_group_0 = TRUE)
+#' s4 <- create_section_spreadsheet_180(year = 2017, quarter = "WI", section = "C", num_groups = 5, create_group_0 = TRUE, trim = TRUE, ...)
 #' }
-create_section_spreadsheet_180 <- function(year, quarter, section, num_groups, create_group_0 = TRUE, ...) {
+create_section_spreadsheet_180 <- function(year, quarter, section, num_groups, create_group_0 = TRUE, trim = TRUE, ...) {
     assertthat::assert_that(assertthat::is.count(year))
     assertthat::assert_that(year > 2016)
     assertthat::assert_that(assertthat::is.string(quarter))
@@ -44,5 +45,5 @@ create_section_spreadsheet_180 <- function(year, quarter, section, num_groups, c
     ) %>%
         dplyr::arrange_("Group")
 
-    googlesheets::gs_new(title = section_title, input = section_data, trim = TRUE)
+    googlesheets::gs_new(title = section_title, input = section_data, trim = trim)
 }

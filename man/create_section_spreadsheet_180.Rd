@@ -5,7 +5,7 @@
 \title{Create a Google Sheet for a BIO 180 section}
 \usage{
 create_section_spreadsheet_180(year, quarter, section, num_groups,
-  create_group_0 = TRUE, ...)
+  create_group_0 = TRUE, trim = TRUE, ...)
 }
 \arguments{
 \item{year}{The year}
@@ -18,6 +18,8 @@ create_section_spreadsheet_180(year, quarter, section, num_groups,
 
 \item{create_group_0}{Whether or not to create a group 0 for controls (default: TRUE)}
 
+\item{trim}{TODO (default: TRUE)}
+
 \item{...}{Additional arguments (ignored)}
 }
 \value{
@@ -28,6 +30,6 @@ Create a Google Sheet for a BIO 180 section
 }
 \examples{
 \dontrun{
-s4 <- create_section_spreadsheet_180(year = 2017, quarter = "WI", section = "C", num_groups = 5, create_group_0 = TRUE)
+s4 <- create_section_spreadsheet_180(year = 2017, quarter = "WI", section = "C", num_groups = 5, create_group_0 = TRUE, trim = TRUE, ...)
 }
 }
