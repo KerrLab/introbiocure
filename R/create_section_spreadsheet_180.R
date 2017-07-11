@@ -11,7 +11,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' s4 <- create_section_spreadsheet_180(year = 2017, quarter = "WI", section = "C", num_groups = 5, create_group_0 = TRUE, trim = TRUE, ...)
+#' s4 <- create_section_spreadsheet_180(year = 2017,
+#'                                      quarter = "WI",
+#'                                      section = "C",
+#'                                      num_groups = 5,
+#'                                      create_group_0 = TRUE,
+#'                                      trim = TRUE,
+#'                                      ...)
 #' }
 create_section_spreadsheet_180 <- function(year,
                                            quarter,
