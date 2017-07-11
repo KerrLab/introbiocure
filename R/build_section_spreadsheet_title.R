@@ -9,7 +9,8 @@
 #' @export
 #'
 #' @examples
-#' build_section_title(180, 2017, "AU", "C")
+#' build_section_spreadsheet_title(180, 2017, "AU", "C")
+#'
 build_section_spreadsheet_title <- function(course, year, quarter, section) {
     assertthat::assert_that(is_course(course))
     assertthat::assert_that(assertthat::is.count(year))

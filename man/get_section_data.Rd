@@ -34,5 +34,8 @@ TODO
 \code{save_section_data} saves data for a given section to a csv file
 }
 \examples{
-#TODO
+\dontrun{
+d <- get_section_data(course = 200, year = 2017, quarter = "WI", section = "R")
+save_section_data(path = "bio200_r.csv", course = 200, year = 2017, quarter = "WI", section = "R")
+}
 }

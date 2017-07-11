@@ -26,6 +26,7 @@ matching those parameters are shown. For example, if \code{course = 180},
 only sheets for BIO 180 are returned.
 }
 \examples{
+\dontrun{
 sheets_2017 <- list_course_spreadsheets(year = 2017)
-
+}
 }

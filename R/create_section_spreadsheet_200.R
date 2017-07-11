@@ -7,7 +7,6 @@
 #' @param ... Additional arguments passed to \code{\link[googlesheets]{gs_new}}
 #'
 #' @return A \code{\link[googlesheets]{googlesheet}} object
-#' @importFrom rlang !!
 #' @export
 #'
 #' @examples

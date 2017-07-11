@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^README-.*\.png$
+^NOTES\.md$
+^testing\.R$
+^\.httr-oauth$

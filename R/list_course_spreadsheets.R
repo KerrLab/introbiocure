@@ -14,8 +14,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' sheets_2017 <- list_course_spreadsheets(year = 2017)
-#'
+#' }
 list_course_spreadsheets <- function(course = NULL,
                                      year = NULL,
                                      quarter = NULL,
@@ -28,6 +29,13 @@ list_course_spreadsheets <- function(course = NULL,
         ifelse(is.null(section), "[A-Za-z]{1,2}", toupper(section))
     )
 
-    # TODO: add columns for course, year, quarter, section
-    googlesheets::gs_ls(regex = pattern)
+    sheets <- googlesheets::gs_ls(regex = pattern)
+    x <- stringi::stri_match_first_regex(str = sheets$sheet_title, "^BIO(180|200) (AU|WI|SP|SU)([0-9]{4}) Section ([A-Za-z]{1,2})$")
+
+    sheets$Course <- as.numeric(x[,2])
+    sheets$Quarter <- x[,3]
+    sheets$Year <- as.numeric(x[,4])
+    sheets$Section <- x[,5]
+
+    sheets
 }

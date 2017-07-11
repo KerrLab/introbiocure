@@ -22,5 +22,6 @@ A string containing the title for the corresponding spreadsheet
 Title TODO
 }
 \examples{
-build_section_title(180, 2017, "AU", "C")
+build_section_spreadsheet_title(180, 2017, "AU", "C")
+
 }

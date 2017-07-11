@@ -6,14 +6,14 @@ Authors@R: c(person(given = "Brian", family = "Connelly", email = "bdc@bconnelly
                     role = c("aut", "cre"))) 
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: googlesheets,
-    tibble,
-    assertthat,
-    magrittr,
+Imports: assertthat,
     dplyr,
+    googlesheets,
+    magrittr,
+    readr,
     stringi,
-    readr
+    tibble
 RoxygenNote: 6.0.1
