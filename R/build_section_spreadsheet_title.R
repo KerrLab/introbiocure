@@ -11,14 +11,11 @@
 #' @examples
 #' build_section_title(180, 2017, "AU", "C")
 build_section_spreadsheet_title <- function(course, year, quarter, section) {
-    assertthat::assert_that(assertthat::is.count(course))
     assertthat::assert_that(is_course(course))
     assertthat::assert_that(assertthat::is.count(year))
     assertthat::assert_that(year > 2016)
-    assertthat::assert_that(assertthat::is.string(quarter))
-    assertthat::assert_that(toupper(quarter) %in% c("AU", "WI", "SP", "SU"))
-    assertthat::assert_that(assertthat::is.string(section))
-    # TODO: validate section string
+    assertthat::assert_that(is_quarter(quarter))
+    assertthat::assert_that(is_section(section))
 
     sprintf("BIO%s %s%d Section %s", course, toupper(quarter), year,
             toupper(section))

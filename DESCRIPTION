@@ -2,8 +2,8 @@ Package: introbiocure
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Authors@R: c(person(given = "Brian", family = "Connelly", email = "bdc@bconnelly.net",
+                    role = c("aut", "cre"))) 
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
@@ -13,5 +13,7 @@ Imports: googlesheets,
     tibble,
     assertthat,
     magrittr,
-    dplyr
+    dplyr,
+    stringi,
+    readr
 RoxygenNote: 6.0.1

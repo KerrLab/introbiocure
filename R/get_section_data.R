@@ -1,8 +1,11 @@
-#' TODO
+#' Retrieve Section Data
+#'
+#' \code{get_section_data} returns the data for a given section as a data frame
 #'
 #' @inheritParams build_section_spreadsheet_title
+#' @param path File path or connection to write data to
 #' @param include_course Whether or not to include the course number as a column (default: TRUE)
-#' @param ... Additional arguments passed to \code{\link[googlesheets]{gs_read}}
+#' @param ... Additional arguments passed to \code{\link[googlesheets]{gs_read}} (\code{get_section_data}) or \code{\link[readr]{write_csv}} (\code{save_section_data}).
 #'
 #' @return TODO
 #' @export
@@ -54,4 +57,15 @@ get_section_data <- function(course, year, quarter, section, include_course = TR
     }
 
     d
+}
+
+#' @rdname get_section_data
+#' @description \code{save_section_data} saves data for a given section to a csv file
+#' @export
+save_section_data <- function(path, course, year, quarter, section, include_course = TRUE, ...) {
+    readr::write_csv(
+        x = get_section_data(course, year, quarter, section, include_course),
+        path = path,
+        ...
+    )
 }

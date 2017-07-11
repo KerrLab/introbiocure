@@ -2,9 +2,13 @@
 % Please edit documentation in R/get_section_data.R
 \name{get_section_data}
 \alias{get_section_data}
-\title{TODO}
+\alias{save_section_data}
+\title{Retrieve Section Data}
 \usage{
 get_section_data(course, year, quarter, section, include_course = TRUE, ...)
+
+save_section_data(path, course, year, quarter, section, include_course = TRUE,
+  ...)
 }
 \arguments{
 \item{course}{The course number (e.g., 180 or 200)}
@@ -17,13 +21,17 @@ get_section_data(course, year, quarter, section, include_course = TRUE, ...)
 
 \item{include_course}{Whether or not to include the course number as a column (default: TRUE)}
 
-\item{...}{Additional arguments passed to \code{\link[googlesheets]{gs_read}}}
+\item{...}{Additional arguments passed to \code{\link[googlesheets]{gs_read}} (\code{get_section_data}) or \code{\link[readr]{write_csv}} (\code{save_section_data}).}
+
+\item{path}{File path or connection to write data to}
 }
 \value{
 TODO
 }
 \description{
-TODO
+\code{get_section_data} returns the data for a given section as a data frame
+
+\code{save_section_data} saves data for a given section to a csv file
 }
 \examples{
 #TODO
