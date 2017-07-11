@@ -14,7 +14,13 @@
 #' \dontrun{
 #' s4 <- create_section_spreadsheet_180(year = 2017, quarter = "WI", section = "C", num_groups = 5, create_group_0 = TRUE, trim = TRUE, ...)
 #' }
-create_section_spreadsheet_180 <- function(year, quarter, section, num_groups, create_group_0 = TRUE, trim = TRUE, ...) {
+create_section_spreadsheet_180 <- function(year,
+                                           quarter,
+                                           section,
+                                           num_groups,
+                                           create_group_0 = TRUE,
+                                           trim = TRUE,
+                                           ...) {
     assertthat::assert_that(assertthat::is.count(year))
     assertthat::assert_that(year > 2016)
     assertthat::assert_that(is_quarter(quarter))

@@ -12,7 +12,12 @@
 #'
 #' @examples
 #' #TODO
-get_section_data <- function(course, year, quarter, section, include_course = TRUE, ...) {
+get_section_data <- function(course,
+                             year,
+                             quarter,
+                             section,
+                             include_course = TRUE,
+                             ...) {
 
     section_title <- build_section_spreadsheet_title(
         course = course,
@@ -25,7 +30,7 @@ get_section_data <- function(course, year, quarter, section, include_course = TR
         d <- googlesheets::gs_read(
             ss = googlesheets::gs_title(section_title),
             col_types = readr::cols(
-                Year = readr::col_integer()   ,
+                Year = readr::col_integer(),
                 Quarter = readr::col_factor(levels = c("AU", "WI", "SP", "SU")),
                 Section = readr::col_character(),
                 Group = readr::col_integer(),
@@ -38,7 +43,7 @@ get_section_data <- function(course, year, quarter, section, include_course = TR
         d <- googlesheets::gs_read(
             ss = googlesheets::gs_title(section_title),
             col_types = readr::cols(
-                Year = readr::col_integer()   ,
+                Year = readr::col_integer(),
                 Quarter = readr::col_factor(levels = c("AU", "WI", "SP", "SU")),
                 Section = readr::col_character(),
                 Group = readr::col_integer(),
@@ -62,7 +67,13 @@ get_section_data <- function(course, year, quarter, section, include_course = TR
 #' @rdname get_section_data
 #' @description \code{save_section_data} saves data for a given section to a csv file
 #' @export
-save_section_data <- function(path, course, year, quarter, section, include_course = TRUE, ...) {
+save_section_data <- function(path,
+                              course,
+                              year,
+                              quarter,
+                              section,
+                              include_course = TRUE,
+                              ...) {
     readr::write_csv(
         x = get_section_data(course, year, quarter, section, include_course),
         path = path,
