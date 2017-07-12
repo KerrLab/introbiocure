@@ -1,0 +1,96 @@
+---
+title: "Creating Section Spreadsheets"
+author: "Brian Connelly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup,include=FALSE}
+library(introbiocure)
+#gs_auth()
+```
+
+
+Class data are stored as Google Sheets.
+The `introbiocure` package contains several tools for creating, exporting, and analyzing these data.
+Each course section has its own spreadsheet.
+This document shows how these spreadsheets are created and prepared.
+
+
+## First Steps
+
+Before we can begin, open RStudio and load the `introbiocure` package.
+We'll also run the `gs_auth` command to log into your Google account.
+This will open up a login page in your web browser.
+
+```{r Loading introbiocure,eval=FALSE}
+library(introbiocure)
+
+gs_auth()
+```
+
+
+## Creating a Section Spreadsheet
+
+First, we'll create a spreadsheet for a section using the `create_section_spreadsheet180` or `create_section_spreadsheet200` function, depending on the course.
+For example, let's create a spreadsheet for a section of BIO 180 (and save some information in a variable called `section_E`:
+
+```{r Creating a BIO 180 Section,eval=FALSE}
+section_E <- create_section_spreadsheet_180(year = 2017, quarter = "WI", section = "E", num_groups = 4)
+```
+
+If you're managing multiple sections, you'll want to repeat this process for each section, changing the `section` argument each time.
+Like most commands provided by `introbiocure`, you can learn more by visiting that function's help page by running `?<command>` (e.g., `?create_section_spreadsheet_180`).
+
+
+## Viewing a Section Spreadsheet
+
+Now let's open our new spreadsheet (named *BIO180 WI2017 Section E*) in Google Sheets.
+
+```{r Viewing a Section Spreadsheet,eval=FALSE}
+view_section_spreadsheet(course = 180, year = 2017, quarter = "WI", section = "E")
+```
+
+Alternately, we can use the `gs_browse` function from the [googlesheets](https://github.com/jennybc/googlesheets) package:
+
+```{r Viewing a Section Spreadsheet with gs_browse,eval=FALSE}
+googlesheets::gs_browse(section_E)
+```
+
+
+## Editing a Section Spreadsheet
+
+- TODO: lock cells
+- TODO: freeze row 1
+- TODO: input validation
+
+
+## Sharing a Section Spreadsheet
+
+TODO
+
+
+## Exporting Data
+
+TODO.
+
+
+## Listing Existing Spreadsheets
+
+You can also list the existing course spreadsheets in your account using the `list_course_spreadsheets` function:
+
+```{r Listing Existing Spreadsheets,eval=FALSE}
+list_course_spreadsheets()
+```
+
+If you'd like to list spreadsheets only for a particular year or course, those can be specified by arguments.
+For example:
+
+```{r Listing Existing Spreadsheets 180,eval=FALSE}
+list_course_spreadsheets(course = 180, year = 2017)
+```
+
