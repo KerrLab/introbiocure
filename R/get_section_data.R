@@ -61,7 +61,7 @@ get_section_data <- function(course,
     }
 
     if (include_course) {
-        d <- dplyr::mutate(d, Course = course)
+        d <- tibble::add_column(d, Course = course, .before = "Year")
     }
 
     d
