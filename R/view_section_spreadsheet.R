@@ -29,3 +29,15 @@ view_section_spreadsheet_180 <- function(year, quarter, section) {
         section = section
     )
 }
+
+
+#' @rdname view_section_spreadsheet
+#' @export
+view_section_spreadsheet_200 <- function(year, quarter, section) {
+    view_section_spreadsheet(
+        course = 200,
+        year = year,
+        quarter = quarter,
+        section = section
+    )
+}

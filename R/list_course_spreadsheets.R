@@ -32,10 +32,14 @@ list_course_spreadsheets <- function(course = NULL,
     sheets <- googlesheets::gs_ls(regex = pattern)
     x <- stringi::stri_match_first_regex(str = sheets$sheet_title, "^BIO(180|200) (AU|WI|SP|SU)([0-9]{4}) Section ([A-Za-z]{1,2})$")
 
-    sheets$Course <- as.numeric(x[,2])
-    sheets$Quarter <- x[,3]
-    sheets$Year <- as.numeric(x[,4])
-    sheets$Section <- x[,5]
+    sheets <- tibble::add_column(
+        sheets,
+        Course = as.numeric(x[,2]),
+        Quarter = x[,3],
+        Year = as.numeric(x[,4]),
+        Section = x[,5],
+        .after = "sheet_title"
+    )
 
     sheets
 }

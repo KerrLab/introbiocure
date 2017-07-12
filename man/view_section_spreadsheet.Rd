@@ -3,11 +3,14 @@
 \name{view_section_spreadsheet}
 \alias{view_section_spreadsheet}
 \alias{view_section_spreadsheet_180}
+\alias{view_section_spreadsheet_200}
 \title{Open the Google Sheet for a BIO 180/200 section}
 \usage{
 view_section_spreadsheet(course, year, quarter, section)
 
 view_section_spreadsheet_180(year, quarter, section)
+
+view_section_spreadsheet_200(year, quarter, section)
 }
 \arguments{
 \item{course}{The course number (e.g., 180 or 200)}

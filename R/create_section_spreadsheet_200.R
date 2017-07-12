@@ -64,4 +64,6 @@ create_section_spreadsheet_200 <- function(year,
         trim = trim,
         ...
     )
+
+    # TODO: add course/quarter/section info to returned object
 }
