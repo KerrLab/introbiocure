@@ -1,5 +1,5 @@
 ---
-title: "Creating Section Spreadsheets"
+title: "Working with Section Spreadsheets"
 author: "Brian Connelly"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -55,11 +55,16 @@ Now let's open our new spreadsheet (named *BIO180 WI2017 Section E*) in Google S
 view_section_spreadsheet(course = 180, year = 2017, quarter = "WI", section = "E")
 ```
 
-Alternately, we can use the `gs_browse` function from the [googlesheets](https://github.com/jennybc/googlesheets) package:
+Alternately, we can use the `gs_browse` function from the [googlesheets](https://github.com/jennybc/googlesheets) package.
 
 ```{r Viewing a Section Spreadsheet with gs_browse,eval=FALSE}
 googlesheets::gs_browse(section_E)
 ```
+
+
+You should see something like this:
+
+![](working-browse1.png)
 
 
 ## Editing a Section Spreadsheet
@@ -74,11 +79,6 @@ googlesheets::gs_browse(section_E)
 TODO
 
 
-## Exporting Data
-
-TODO.
-
-
 ## Listing Existing Spreadsheets
 
 You can also list the existing course spreadsheets in your account using the `list_course_spreadsheets` function:
@@ -87,10 +87,30 @@ You can also list the existing course spreadsheets in your account using the `li
 list_course_spreadsheets()
 ```
 
-If you'd like to list spreadsheets only for a particular year or course, those can be specified by arguments.
+If you'd like to focus on a particular year or course, those can be specified by arguments.
 For example:
 
 ```{r Listing Existing Spreadsheets 180,eval=FALSE}
 list_course_spreadsheets(course = 180, year = 2017)
 ```
 
+
+## Retrieving and Saving Section Data
+
+`get_section_data` allows you to import a section's data into R.
+For example, to retrieve data for the section we created and store it as a data frame named `df`:
+
+```{r Get Section Data,eval=FALSE}
+df <- get_section_data(course = 180, year = 2017, quarter = "WI", section = "E")
+```
+
+Or, to get a section's data and save it to a .csv file:
+
+```{r Save Data as CSV,eval=FALSE}
+save_section_data(path = 'BIO_180-section_E.csv', course = 180, year = 2017, quarter = "WI", section = "E")
+```
+
+
+## Deleting a Spreadsheet
+
+If, for some reason, you need to delete a spreadsheet, use `delete_section_spreadsheet`.
