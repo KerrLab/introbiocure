@@ -13,6 +13,7 @@ Imports: assertthat,
     dplyr,
     googlesheets,
     magrittr,
+    purrr,
     readr,
     stringi,
     tibble

@@ -2,6 +2,8 @@
 
 export("%>%")
 export(build_section_spreadsheet_title)
+export(combine_section_data_key)
+export(combine_section_data_url)
 export(create_section_spreadsheet_180)
 export(create_section_spreadsheet_200)
 export(delete_section_spreadsheet)

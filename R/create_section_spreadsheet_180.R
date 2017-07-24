@@ -48,7 +48,10 @@ create_section_spreadsheet_180 <- function(year,
             Section = toupper(section),
             Group = seq(ifelse(create_group_0, 0, 1), num_groups),
             Anc.or.Des = c("A", "D"),
-            Fitness = as.character("")
+            Drug.at.Isolation = "",
+            Fitness = "",
+            Drug = "",
+            MIC = ""
         )
     ) %>%
         dplyr::arrange_("Group")
