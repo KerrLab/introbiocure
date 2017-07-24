@@ -17,14 +17,11 @@
 #' all_180_data <- combine_section_data_key(my_180_sections$sheet_key)
 #' }
 combine_section_data_key <- function(..., remove_duplicates = TRUE) {
-    urls <- list(...)
-
-    if (remove_duplicates) {
-        urls <- unique(urls)
-    }
-
-    purrr::map_df(urls, ~ googlesheets::gs_read(googlesheets::gs_key(.), col_types = readr::cols(Anc.or.Des = readr::col_factor(levels = c("A", "D")))))
+    x <- as.list(paste0("https://docs.google.com/spreadsheets/d/", list(...)))
+    x$remove_duplicates = remove_duplicates
+    do.call(combine_section_data_url, x)
 }
+
 
 #' @description \code{combine_section_data_url} combines data from multiple
 #' sheets specified by URL
@@ -33,9 +30,23 @@ combine_section_data_key <- function(..., remove_duplicates = TRUE) {
 combine_section_data_url <- function(..., remove_duplicates = TRUE) {
     urls <- list(...)
 
+    if (length(urls) < 1) {
+        stop("Must supply at least one sheet", call. = FALSE)
+    }
+
     if (remove_duplicates) {
         urls <- unique(urls)
     }
 
-    purrr::map_df(urls, ~ googlesheets::gs_read(googlesheets::gs_url(.), col_types = readr::cols(Anc.or.Des = readr::col_factor(levels = c("A", "D")))))
+    purrr::map_df(
+        urls,
+        ~ googlesheets::gs_read(
+            googlesheets::gs_url(.),
+            col_types = readr::cols(
+                Year = readr::col_integer(),
+                Quarter = readr::col_factor(levels = c("AU", "WI", "SP", "SU")),
+                Group = readr::col_integer(),
+                Anc.or.Des = readr::col_factor(levels = c("A", "D")))
+        )
+    )
 }

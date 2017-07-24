@@ -27,7 +27,8 @@ sheets specified by URL
 }
 \examples{
 \dontrun{
-TODO
+my_180_sections <- list_course_spreadsheets(course = 180)
+all_180_data <- combine_section_data_key(my_180_sections$sheet_key)
 }
 }
 \seealso{
