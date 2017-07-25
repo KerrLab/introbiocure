@@ -42,11 +42,7 @@ combine_section_data_url <- function(..., remove_duplicates = TRUE) {
         urls,
         ~ googlesheets::gs_read(
             googlesheets::gs_url(.),
-            col_types = readr::cols(
-                Year = readr::col_integer(),
-                Quarter = readr::col_factor(levels = c("AU", "WI", "SP", "SU")),
-                Group = readr::col_integer(),
-                Anc.or.Des = readr::col_factor(levels = c("A", "D")))
+            col_types = col_types_both
         )
     )
 }
