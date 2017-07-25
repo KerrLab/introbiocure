@@ -5,18 +5,20 @@
 \alias{combine_section_data_url}
 \title{Combine and Retrieve Data From Multiple Sections}
 \usage{
-combine_section_data_key(..., remove_duplicates = TRUE)
+combine_section_data_key(keys, remove_duplicates = TRUE)
 
-combine_section_data_url(..., remove_duplicates = TRUE)
+combine_section_data_url(urls, remove_duplicates = TRUE)
 }
 \arguments{
-\item{...}{List or vector specifying one or more sheets.}
+\item{keys}{List of one or more sheet keys}
 
 \item{remove_duplicates}{Whether or not to remove sheets that are given more
 than once (default: \code{TRUE})}
+
+\item{urls}{List of one or more sheet URLs}
 }
 \value{
-TODO
+A data frame containing data from the given sections
 }
 \description{
 \code{combine_section_data_key} combines data from multiple
