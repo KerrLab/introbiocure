@@ -55,3 +55,31 @@ assertthat::on_failure(is_section) <- function(call, env) {
     paste0(deparse(call$x), " is not a valid section")
 }
 
+
+#' @rdname validation
+#' @description \code{is_drug} Determines whether or not a given antibiotic
+#' is valid (in the context of the courses)
+#' @export
+#' @examples
+#' is_drug("Streptomycin")
+is_drug <- function(x) {
+    assertthat::assert_that(assertthat::is.string(x), length(x) == 1)
+    tolower(x) %in% c("rifampicin", "streptomycin")
+}
+
+assertthat::on_failure(is_drug) <- function(call, env) {
+    paste0(deparse(call$x), " is not a valid antibiotic")
+}
+
+
+#' @rdname validation
+#' @description \code{is_drug_abbr} Determines whether or not a given
+#' abbreviated antibiotic is valid (in the context of the courses)
+#' @export
+#' @examples
+#' is_drug("STR")
+is_drug_abbr <- function(x) {
+    assertthat::assert_that(assertthat::is.string(x), length(x) == 1)
+    tolower(x) %in% c("RIF", "STR")
+}
+

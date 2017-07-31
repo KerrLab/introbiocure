@@ -104,7 +104,7 @@ For example, to retrieve data for the section we created and store it as a data 
 df <- get_section_data(course = 180, year = 2017, quarter = "WI", section = "E")
 ```
 
-Or, to get a section's data and save it to a .csv file:
+Or, use `save_section_data` to get a section's data and save it to a .csv file:
 
 ```{r Save Data as CSV,eval=FALSE}
 save_section_data(path = 'BIO_180-section_E.csv', course = 180, year = 2017, quarter = "WI", section = "E")

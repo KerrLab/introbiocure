@@ -14,7 +14,7 @@
 build_section_spreadsheet_title <- function(course, year, quarter, section) {
     assertthat::assert_that(is_course(course))
     assertthat::assert_that(assertthat::is.count(year))
-    assertthat::assert_that(year > 2016)
+    assertthat::assert_that(year >= as.numeric(format(Sys.time(), "%Y")))
     assertthat::assert_that(is_quarter(quarter))
     assertthat::assert_that(is_section(section))
 

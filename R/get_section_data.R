@@ -33,7 +33,10 @@ get_section_data <- function(course,
         d <- googlesheets::gs_read(
             ss = googlesheets::gs_title(section_title),
             col_types = col_types_180
-        )
+        ) %>%
+            dplyr::mutate(
+                Drug.at.Isolation = ifelse(tolower(trimws(Drug.at.Isolation)) == "none", NA, Drug.at.Isolation)
+            )
     }
     else if (course == 200) {
         d <- googlesheets::gs_read(

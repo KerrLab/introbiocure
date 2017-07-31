@@ -11,11 +11,13 @@ col_types_180 <- readr::cols(
     Quarter = readr::col_factor(levels = c("AU", "WI", "SP", "SU")),
     Section = readr::col_character(),
     Group = readr::col_integer(),
-    Anc.or.Des = readr::col_factor(levels = c("A", "D")),
+    Pro.or.Des = readr::col_factor(levels = c("Progenitor", "Descendant", "Descendant")),
     Drug.at.Isolation = readr::col_character(), # TODO: make a factor
     Fitness = readr::col_number(),
-    Drug = readr::col_character(), # TODO: make a factor?
-    MIC = readr::col_number()
+    Drug1 = readr::col_character(), # todo: make a factor?
+    Drug1.MIC = readr::col_number(),
+    Drug2 = readr::col_character(), # todo: make a factor?
+    Drug2.MIC = readr::col_number()
 )
 
 col_types_200 <- readr::cols(
@@ -23,7 +25,7 @@ col_types_200 <- readr::cols(
     Quarter = readr::col_factor(levels = c("AU", "WI", "SP", "SU")),
     Section = readr::col_character(),
     Group = readr::col_integer(),
-    Anc.or.Des = readr::col_factor(levels = c("A", "D")),
+    Pro.or.Des = readr::col_factor(levels = c("Progenitor", "Descendant", "Descendant")),
     Cluster = readr::col_factor(levels = c("I", "II")),
     Direction = readr::col_factor(levels = c("F", "R")),
     Sequence = readr::col_character(),
@@ -37,5 +39,5 @@ col_types_both <- readr::cols(
     Quarter = readr::col_factor(levels = c("AU", "WI", "SP", "SU")),
     Section = readr::col_character(),
     Group = readr::col_integer(),
-    Anc.or.Des = readr::col_factor(levels = c("A", "D"))
+    Pro.or.Des = readr::col_factor(levels = c("Progenitor", "Descendant", "Descendant"))
 )

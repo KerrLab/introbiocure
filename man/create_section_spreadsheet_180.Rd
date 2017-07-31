@@ -5,7 +5,8 @@
 \title{Create a Google Sheet for a BIO 180 section}
 \usage{
 create_section_spreadsheet_180(year, quarter, section, num_groups,
-  create_group_0 = TRUE, trim = TRUE, ...)
+  create_group_0 = TRUE, drugs_iso = c("None", "Rifampicin",
+  "Streptomycin"), trim = TRUE, ...)
 }
 \arguments{
 \item{year}{The year}
@@ -17,6 +18,8 @@ create_section_spreadsheet_180(year, quarter, section, num_groups,
 \item{num_groups}{The number of groups in the section}
 
 \item{create_group_0}{Whether or not to create a group 0 for controls (default: TRUE)}
+
+\item{drugs_iso}{List of drugs used when creating progenitors (default: \code{c("None", "Rifampicin", "Streptomycin")})}
 
 \item{trim}{Should the resulting worksheet only include the necessary cells? (default: TRUE)}
 

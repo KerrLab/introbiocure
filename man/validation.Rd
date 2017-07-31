@@ -4,6 +4,8 @@
 \alias{is_course}
 \alias{is_quarter}
 \alias{is_section}
+\alias{is_drug}
+\alias{is_drug_abbr}
 \title{Validate Values Given}
 \usage{
 is_course(x)
@@ -11,6 +13,10 @@ is_course(x)
 is_quarter(x)
 
 is_section(x)
+
+is_drug(x)
+
+is_drug_abbr(x)
 }
 \arguments{
 \item{x}{Value to test}
@@ -30,9 +36,17 @@ name is valid. Valid values include "AU" (Autumn), "WI" (Winter),
 \code{is_section} Determines whether or not a given section name
 is valid. Section names are letters A-Z. When more than 26 sections exist,
 two letter codes are used.
+
+\code{is_drug} Determines whether or not a given antibiotic
+is valid (in the context of the courses)
+
+\code{is_drug_abbr} Determines whether or not a given
+abbreviated antibiotic is valid (in the context of the courses)
 }
 \examples{
 is_course(180)
 is_quarter("WI")
 is_section("C")
+is_drug("Streptomycin")
+is_drug("STR")
 }

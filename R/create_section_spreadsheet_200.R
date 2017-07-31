@@ -27,7 +27,7 @@ create_section_spreadsheet_200 <- function(year,
                                            trim = TRUE,
                                            ...) {
     assertthat::assert_that(assertthat::is.count(year))
-    assertthat::assert_that(year > 2016)
+    assertthat::assert_that(year >= as.numeric(format(Sys.time(), "%Y")))
     assertthat::assert_that(is_quarter(quarter))
     assertthat::assert_that(is_section(section))
     assertthat::assert_that(assertthat::is.count(num_groups))
@@ -48,7 +48,7 @@ create_section_spreadsheet_200 <- function(year,
             Quarter = toupper(quarter),
             Section = toupper(section),
             Group = seq(ifelse(create_group_0, 0, 1), num_groups),
-            Anc.or.Des = c("A", "D"),
+            Pro.or.Des = c("Progenitor", "Descendant"),
             Cluster = c("I", "II"),
             Direction = c("F", "R"),
             Sequence = "",
@@ -56,7 +56,7 @@ create_section_spreadsheet_200 <- function(year,
             AA.Mutations = ""
         )
     ) %>%
-        dplyr::arrange_(c("Group", "Anc.or.Des", "Cluster", "Direction"))
+        dplyr::arrange_(c("Group", "Pro.or.Des", "Cluster", "Direction"))
 
     googlesheets::gs_new(
         title = section_title,
