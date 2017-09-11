@@ -24,13 +24,20 @@ combine_section_data_key <- function(keys, remove_duplicates = TRUE) {
         keys <- unique(keys)
     }
 
-    purrr::map_df(
+    dAll <- purrr::map_df(
         keys,
         ~ googlesheets::gs_read(
             googlesheets::gs_key(.),
             col_types = col_types_both
         )
-    )
+    ) %>%
+        dplyr::mutate(
+            Section = as.factor(Section),
+            Pro.or.Des = as.factor(Pro.or.Des),
+            Drug.at.Isolation = as.factor(Drug.at.Isolation)
+        )
+
+    dAll
 }
 
 

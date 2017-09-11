@@ -5,8 +5,8 @@
 \title{Create a Google Sheet for a BIO 180 section}
 \usage{
 create_section_spreadsheet_180(year, quarter, section, num_groups,
-  create_group_0 = TRUE, drugs_iso = c("None", "Rifampicin",
-  "Streptomycin"), trim = TRUE, ...)
+  create_group_0 = TRUE, start_strainid = NULL, drugs_iso = c("None",
+  "Rifampicin", "Streptomycin"), trim = TRUE, ...)
 }
 \arguments{
 \item{year}{The year}
@@ -18,6 +18,8 @@ create_section_spreadsheet_180(year, quarter, section, num_groups,
 \item{num_groups}{The number of groups in the section}
 
 \item{create_group_0}{Whether or not to create a group 0 for controls (default: TRUE)}
+
+\item{start_strainid}{First strain ID to use. Can be numeric (e.g., 1000) or a strain ID ("AB000"). If none is provided, the StrainID column will be left empty.}
 
 \item{drugs_iso}{List of drugs used when creating progenitors (default: \code{c("None", "Rifampicin", "Streptomycin")})}
 
@@ -38,6 +40,7 @@ s4 <- create_section_spreadsheet_180(year = 2017,
                                      section = "C",
                                      num_groups = 5,
                                      create_group_0 = TRUE,
+                                     start_strainid = 300,
                                      trim = TRUE,
                                      ...)
 }

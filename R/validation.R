@@ -83,3 +83,15 @@ is_drug_abbr <- function(x) {
     tolower(x) %in% c("RIF", "STR")
 }
 
+
+#' @rdname validation
+#' @description \code{is_strain_id} Determines whether or not a given
+#' string is a valid strain ID. Valid strain IDs contain two uppercase letters
+#' followed by three digits.
+#' @export
+#' @examples
+#' is_strain_id("AG103")
+is_strain_id <- function(x) {
+    assertthat::assert_that(assertthat::is.string(x), length(x) == 1)
+    stringi::stri_detect_regex(x, "^[A-Z]{2}[0-9]{3}$")
+}

@@ -6,6 +6,7 @@
 \alias{is_section}
 \alias{is_drug}
 \alias{is_drug_abbr}
+\alias{is_strain_id}
 \title{Validate Values Given}
 \usage{
 is_course(x)
@@ -17,6 +18,8 @@ is_section(x)
 is_drug(x)
 
 is_drug_abbr(x)
+
+is_strain_id(x)
 }
 \arguments{
 \item{x}{Value to test}
@@ -42,6 +45,10 @@ is valid (in the context of the courses)
 
 \code{is_drug_abbr} Determines whether or not a given
 abbreviated antibiotic is valid (in the context of the courses)
+
+\code{is_strain_id} Determines whether or not a given
+string is a valid strain ID. Valid strain IDs contain two uppercase letters
+followed by three digits.
 }
 \examples{
 is_course(180)
@@ -49,4 +56,5 @@ is_quarter("WI")
 is_section("C")
 is_drug("Streptomycin")
 is_drug("STR")
+is_strain_id("AG103")
 }
