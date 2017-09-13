@@ -3,11 +3,14 @@
 \name{get_section_data_180}
 \alias{get_section_data_180}
 \alias{get_section_data_180_key}
+\alias{save_section_data_180}
 \title{Get Data for a Given Section}
 \usage{
 get_section_data_180(url, remove_duplicates = TRUE, ...)
 
 get_section_data_180_key(key, remove_duplicates = TRUE, ...)
+
+save_section_data_180(path, url, remove_duplicates = TRUE, ...)
 }
 \arguments{
 \item{url}{One or more sheet URLs}
@@ -27,6 +30,8 @@ Both \code{get_section_data_180} and \code{get_section_data_180_key} retrieve
 data for a given section (or sections). \code{get_section_data_180} is given
 the URL(s) of section sheets, while \code{get_section_data_180_key} is given
 the unique keys.
+
+\code{save_section_data} saves data for a given section to a csv file
 }
 \examples{
 \dontrun{

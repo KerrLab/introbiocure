@@ -27,6 +27,7 @@ get_section_data_180 <- function(url, remove_duplicates = TRUE, ...) {
     )
 }
 
+
 #' @rdname get_section_data_180
 #' @export
 get_section_data_180_key <- function(key, remove_duplicates = TRUE, ...) {
@@ -50,4 +51,17 @@ get_section_data_180_key <- function(key, remove_duplicates = TRUE, ...) {
         )
 
     dAll
+}
+
+
+#' @rdname get_section_data_180
+#' @description \code{save_section_data} saves data for a given section (URL) to
+#' a csv file
+#' @export
+save_section_data_180 <- function(path, url, remove_duplicates = TRUE, ...) {
+    readr::write_csv(
+        x = get_section_data_180(url),
+        path = path,
+        ...
+    )
 }
