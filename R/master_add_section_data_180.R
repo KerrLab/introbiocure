@@ -1,22 +1,23 @@
 #' Insert Section Data into Master Sheet
 #'
-#' @param title Title of the master spreadsheet (default: "Intro Bio Cure Master")
-#' @param d Data frame (see \code{get_section_data})
+#' @param master URL of the master spreadsheet
+#' @param d Data frame containing section data (see \code{\link{get_section_data_180}})
 #'
-#' @return TODO
 #' @export
 #'
 #' @examples
-#' \dontrun{TODO}
-master_add_section_data_180 <- function(title, d) {
+#' \dontrun{
+#' d <- get_section_data_180(<section url>)
+#' master_add_section_data_180(<master sheet url>, d)
+#' }
+master_add_section_data_180 <- function(master, d) {
     assertthat::assert_that(
-        assertthat::is.string(title),
+        assertthat::is.string(master),
         is.data.frame(d),
-        nrow(d) > 0,
-        all(d$Course == 180)
+        nrow(d) > 0
     )
 
-    mData <- get_master_data(title = title)
+    mData <- get_master_data(master = master)
 
     # Test for overlap.
     # We don't want to add new rows for data that already exist. Here, we're
@@ -34,8 +35,16 @@ master_add_section_data_180 <- function(title, d) {
         )
     }
 
+    dCleaned <- d %>%
+        tibble::add_column(
+            Base.Mutations = "",
+            AA.Mutations = "",
+            SequenceProblemIdentified = "No"
+        ) %>%
+        dplyr::select(Year, Quarter, Section, Group, StrainID, Pro.or.Des, Drug.at.Isolation, Fitness, Drug1, Drug1.MIC, Drug2, Drug2.MIC, Base.Mutations, AA.Mutations, ProblemIdentified, SequenceProblemIdentified)
+
     googlesheets::gs_add_row(
-        ss = googlesheets::gs_title(title),
-        input = dplyr::select_(d, "Year", "Quarter", "Section", "Group", "StrainID", "Pro.or.Des", "Drug.at.Isolation", "Fitness", "Drug1", "Drug1.MIC", "Drug2", "Drug2.MIC")
+        ss = googlesheets::gs_url(master),
+        input = dCleaned
     )
 }

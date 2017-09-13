@@ -104,5 +104,7 @@ create_section_spreadsheet_180 <- function(year,
     s$quarter <- toupper(quarter)
     s$section <- toupper(section)
 
+    message("Remember to manually add data validation checks to your spreadsheet")
+
     s
 }

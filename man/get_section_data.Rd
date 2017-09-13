@@ -6,9 +6,11 @@
 \alias{save_section_data_180}
 \title{Retrieve Data for a Given Section}
 \usage{
-get_section_data_180(url, remove_duplicates = TRUE, ...)
+get_section_data_180(url, remove_duplicates = TRUE,
+  problems_as_logical = FALSE, ...)
 
-get_section_data_180_key(key, remove_duplicates = TRUE, ...)
+get_section_data_180_key(key, remove_duplicates = TRUE,
+  problems_as_logical = FALSE, ...)
 
 save_section_data_180(path, url, remove_duplicates = TRUE, ...)
 }
@@ -17,6 +19,9 @@ save_section_data_180(path, url, remove_duplicates = TRUE, ...)
 
 \item{remove_duplicates}{Whether or not to remove sheets that are given more
 than once (default: \code{TRUE})}
+
+\item{problems_as_logical}{Whether or not to try to convert ProblemsIdentified
+values to logical (default: \code{FALSE})}
 
 \item{...}{Additional arguments (not currently used)}
 

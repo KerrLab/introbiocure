@@ -4,19 +4,19 @@
 \alias{master_add_section_data_180}
 \title{Insert Section Data into Master Sheet}
 \usage{
-master_add_section_data_180(title, d)
+master_add_section_data_180(master, d)
 }
 \arguments{
-\item{title}{Title of the master spreadsheet (default: "Intro Bio Cure Master")}
+\item{master}{URL of the master spreadsheet}
 
-\item{d}{Data frame (see \code{get_section_data})}
-}
-\value{
-TODO
+\item{d}{Data frame containing section data (see \code{\link{get_section_data_180}})}
 }
 \description{
 Insert Section Data into Master Sheet
 }
 \examples{
-\dontrun{TODO}
+\dontrun{
+d <- get_section_data_180(<section url>)
+master_add_section_data_180(<master sheet url>, d)
+}
 }

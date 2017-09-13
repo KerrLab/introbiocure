@@ -59,4 +59,6 @@ create_master_spreadsheet <- function(title, trim = FALSE, ...) {
         trim = trim,
         ...
     )
+
+    message("Remember to manually add data validation checks to your spreadsheet")
 }

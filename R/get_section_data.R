@@ -9,6 +9,8 @@
 #' @param key One or more sheet keys
 #' @param remove_duplicates Whether or not to remove sheets that are given more
 #' than once (default: \code{TRUE})
+#' @param problems_as_logical Whether or not to try to convert ProblemsIdentified
+#' values to logical (default: \code{FALSE})
 #' @param ... Additional arguments (not currently used)
 #'
 #' @return A data frame
@@ -19,19 +21,22 @@
 #' \dontrun{
 #' # TODO
 #' }
-get_section_data_180 <- function(url, remove_duplicates = TRUE, ...) {
+get_section_data_180 <- function(url, remove_duplicates = TRUE,
+                                 problems_as_logical = FALSE, ...) {
     stopifnot(length(url) >= 1)
 
     get_section_data_180_key(
         key = purrr::map_chr(url, googlesheets::extract_key_from_url),
-        remove_duplicates = remove_duplicates
+        remove_duplicates = remove_duplicates,
+        problems_as_logical = problems_as_logical
     )
 }
 
 
 #' @rdname get_section_data
 #' @export
-get_section_data_180_key <- function(key, remove_duplicates = TRUE, ...) {
+get_section_data_180_key <- function(key, remove_duplicates = TRUE,
+                                     problems_as_logical = FALSE, ...) {
     stopifnot(length(key) >= 1)
 
     if (remove_duplicates) {
@@ -50,6 +55,10 @@ get_section_data_180_key <- function(key, remove_duplicates = TRUE, ...) {
             Pro.or.Des = as.factor(Pro.or.Des),
             Drug.at.Isolation = as.factor(Drug.at.Isolation)
         )
+
+    if (problems_as_logical) {
+        dAll$ProblemIdentified <- tolower(trimws(dAll$ProblemIdentified)) == "yes"
+    }
 
     dAll
 }
