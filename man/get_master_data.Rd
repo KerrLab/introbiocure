@@ -5,12 +5,12 @@
 \alias{save_master_data}
 \title{Retrieve Data from Master Spreadsheet}
 \usage{
-get_master_data(title, ...)
+get_master_data(master, ...)
 
-save_master_data(title, path, ...)
+save_master_data(master, path, ...)
 }
 \arguments{
-\item{title}{Title of the master spreadsheet (default: "Intro Bio Cure Master")}
+\item{master}{URL of the master spreadsheet}
 
 \item{...}{Additional arguments passed to \code{\link[googlesheets]{gs_read}} (\code{get_master_data}) or \code{\link[readr]{write_csv}} (\code{save_master_data}).}
 

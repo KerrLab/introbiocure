@@ -4,11 +4,10 @@
 \alias{create_master_spreadsheet}
 \title{Create a Master Spreadsheet (180 + 200)}
 \usage{
-create_master_spreadsheet(title = "Intro Bio Cure Master", trim = FALSE,
-  ...)
+create_master_spreadsheet(title, trim = FALSE, ...)
 }
 \arguments{
-\item{title}{Title for the spreadsheet (default: "Intro Bio Cure Master")}
+\item{title}{Title for the spreadsheet}
 
 \item{trim}{Should the resulting worksheet only include the necessary cells? (default: FALSE)}
 

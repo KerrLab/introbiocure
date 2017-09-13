@@ -4,11 +4,10 @@
 \alias{get_next_strainid}
 \title{Title}
 \usage{
-get_next_strainid(mastersheet_title = "Intro Bio Cure Master",
-  numeric = FALSE)
+get_next_strainid(master, numeric = FALSE)
 }
 \arguments{
-\item{mastersheet_title}{Title of the master spreadsheet (default: "Intro Bio Cure Master")}
+\item{master}{URL of the master spreadsheet}
 
 \item{numeric}{Whether or not the result should be numeric (default:
 \code{FALSE}). If \code{FALSE}, a strain ID is returned.}

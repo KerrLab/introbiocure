@@ -3,7 +3,7 @@
 #' \code{get_master_data} returns the data from the master spreadsheet as a data
 #' frame ()
 #'
-#' @param title Title of the master spreadsheet (default: "Intro Bio Cure Master")
+#' @param master URL of the master spreadsheet
 #' @param path File path or connection to write data to
 #' @param ... Additional arguments passed to \code{\link[googlesheets]{gs_read}} (\code{get_master_data}) or \code{\link[readr]{write_csv}} (\code{save_master_data}).
 #'
@@ -14,13 +14,12 @@
 #' \dontrun{
 #' TODO
 #' }
-get_master_data <- function(title, ...) {
-    d <- googlesheets::gs_read(
-        ss = googlesheets::gs_title(title),
+get_master_data <- function(master, ...) {
+    googlesheets::gs_read(
+        ss = googlesheets::gs_url(master),
         col_types = col_types_master,
         ...
     )
-    d
 }
 
 
@@ -28,9 +27,9 @@ get_master_data <- function(title, ...) {
 #' @description \code{save_master_data} saves data from the master spreadsheet
 #' to a csv file
 #' @export
-save_master_data <- function(title, path, ...) {
+save_master_data <- function(master, path, ...) {
     readr::write_csv(
-        x = get_master_data(title = title),
+        x = get_master_data(master = master),
         path = path,
         ...
     )

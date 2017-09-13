@@ -62,11 +62,12 @@ create_section_spreadsheet_180 <- function(year,
             Drug1 = "",
             Drug1.MIC = "",
             Drug2 = "",
-            Drug2.MIC = ""
+            Drug2.MIC = "",
+            ProblemIdentified = "No"
         ) %>%
         dplyr::select(Year, Quarter, Section, Group, StrainID, Pro.or.Des,
                       Drug.at.Isolation, Fitness, Drug1, Drug1.MIC, Drug2,
-                      Drug2.MIC) %>%
+                      Drug2.MIC, ProblemIdentified) %>%
         dplyr::arrange_("Group")
 
     if (!is.null(start_strainid)) {

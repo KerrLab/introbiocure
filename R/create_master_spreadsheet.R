@@ -1,6 +1,6 @@
 #' Create a Master Spreadsheet (180 + 200)
 #'
-#' @param title Title for the spreadsheet (default: "Intro Bio Cure Master")
+#' @param title Title for the spreadsheet
 #' @param trim Should the resulting worksheet only include the necessary cells? (default: FALSE)
 #' @param ... Additional arguments passed to \code{\link[googlesheets]{gs_new}}
 #'
@@ -11,9 +11,7 @@
 #' \dontrun{
 #' ms <- create_master_spreadsheet()
 #' }
-create_master_spreadsheet <- function(title = "Intro Bio Cure Master",
-                                      trim = FALSE,
-                                      ...) {
+create_master_spreadsheet <- function(title, trim = FALSE, ...) {
     assertthat::assert_that(assertthat::is.string(title))
 
     # This is nice and clean, but googlesheets requires at least one row
@@ -31,7 +29,9 @@ create_master_spreadsheet <- function(title = "Intro Bio Cure Master",
     #     Drug2 = character(),
     #     Drug2.MIC = numeric(),
     #     Base.Mutations = character(),
-    #     AA.Mutations = character()
+    #     AA.Mutations = character(),
+    #     ProblemIdentified = character(),
+    #     SequenceProblemIdentified = character()
     # )
 
     master_data <- tibble::tibble(
@@ -39,7 +39,7 @@ create_master_spreadsheet <- function(title = "Intro Bio Cure Master",
         Quarter = "",
         Section = "",
         Group = "",
-        StrainID = "",
+        StrainID = "AA000",
         Pro.or.Des = "",
         Drug.at.Isolation = "",
         Fitness = "",
@@ -47,15 +47,16 @@ create_master_spreadsheet <- function(title = "Intro Bio Cure Master",
         Drug1.MIC = "",
         Drug2 = "",
         Drug2.MIC = "",
-        Base.Mutations = "",
-        AA.Mutations = ""
+        Base.Mutations = "{}",
+        AA.Mutations = "{}",
+        ProblemIdentified = "Yes",
+        SequenceProblemIdentified = "Yes"
     )
 
-    master_sheet <- googlesheets::gs_new(
+    googlesheets::gs_new(
         title = title,
         input = master_data,
         trim = trim,
         ...
     )
-    master_sheet
 }
