@@ -1,69 +1,67 @@
-#' Retrieve Section Data
+#' Retrieve Data for a Given Section
 #'
-#' \code{get_section_data} returns the data for a given section as a data frame
+#' Both \code{get_section_data_180} and \code{get_section_data_180_key} retrieve
+#' data for a given section (or sections). \code{get_section_data_180} is given
+#' the URL(s) of section sheets, while \code{get_section_data_180_key} is given
+#' the unique keys.
 #'
-#' @inheritParams build_section_spreadsheet_title
-#' @param path File path or connection to write data to
-#' @param include_course Whether or not to include the course number as a column (default: TRUE)
-#' @param ... Additional arguments passed to \code{\link[googlesheets]{gs_read}} (\code{get_section_data}) or \code{\link[readr]{write_csv}} (\code{save_section_data}).
+#' @param url One or more sheet URLs
+#' @param key One or more sheet keys
+#' @param remove_duplicates Whether or not to remove sheets that are given more
+#' than once (default: \code{TRUE})
+#' @param ... Additional arguments (not currently used)
 #'
-#' @return TODO
+#' @return A data frame
 #' @export
 #'
+#' @rdname get_section_data
 #' @examples
 #' \dontrun{
-#' d <- get_section_data(course = 200, year = 2017, quarter = "WI", section = "R")
-#' save_section_data(path = "bio200_r.csv", course = 200, year = 2017, quarter = "WI", section = "R")
+#' # TODO
 #' }
-get_section_data <- function(course,
-                             year,
-                             quarter,
-                             section,
-                             include_course = TRUE,
-                             ...) {
+get_section_data_180 <- function(url, remove_duplicates = TRUE, ...) {
+    stopifnot(length(url) >= 1)
 
-    section_title <- build_section_spreadsheet_title(
-        course = course,
-        year = year,
-        quarter = quarter,
-        section = section
+    get_section_data_180_key(
+        key = purrr::map_chr(url, googlesheets::extract_key_from_url),
+        remove_duplicates = remove_duplicates
     )
-
-    if (course == 180) {
-        d <- googlesheets::gs_read(
-            ss = googlesheets::gs_title(section_title),
-            col_types = col_types_180
-        ) %>%
-            dplyr::mutate(
-                Drug.at.Isolation = ifelse(tolower(trimws(Drug.at.Isolation)) == "none", NA, Drug.at.Isolation)
-            )
-    }
-    else if (course == 200) {
-        d <- googlesheets::gs_read(
-            ss = googlesheets::gs_title(section_title),
-            col_types = col_types_200
-        )
-    }
-
-    if (include_course) {
-        d <- tibble::add_column(d, Course = course, .before = "Year")
-    }
-
-    d
 }
 
+
 #' @rdname get_section_data
-#' @description \code{save_section_data} saves data for a given section to a csv file
 #' @export
-save_section_data <- function(path,
-                              course,
-                              year,
-                              quarter,
-                              section,
-                              include_course = TRUE,
-                              ...) {
+get_section_data_180_key <- function(key, remove_duplicates = TRUE, ...) {
+    stopifnot(length(key) >= 1)
+
+    if (remove_duplicates) {
+        key <- unique(key)
+    }
+
+    dAll <- purrr::map_df(
+        key,
+        ~ googlesheets::gs_read(
+            googlesheets::gs_key(.),
+            col_types = col_types_180
+        )
+    ) %>%
+        dplyr::mutate(
+            Section = as.factor(Section),
+            Pro.or.Des = as.factor(Pro.or.Des),
+            Drug.at.Isolation = as.factor(Drug.at.Isolation)
+        )
+
+    dAll
+}
+
+
+#' @rdname get_section_data
+#' @description \code{save_section_data} saves data for a given section (URL) to
+#' a csv file
+#' @export
+save_section_data_180 <- function(path, url, remove_duplicates = TRUE, ...) {
     readr::write_csv(
-        x = get_section_data(course, year, quarter, section, include_course),
+        x = get_section_data_180(url),
         path = path,
         ...
     )
