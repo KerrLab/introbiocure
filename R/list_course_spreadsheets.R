@@ -46,3 +46,17 @@ list_course_spreadsheets <- function(course = NULL,
 
     sheets
 }
+
+
+#' @rdname list_course_spreadsheets
+#' @description \code{sheet_exists} determines whether or not a spreadsheet with
+#' the given title exists. Note that the match is case sensitive, so "my sheet"
+#' does not match "My Sheet".
+#' @param title Spreadsheet title
+#' @export
+sheet_exists <- function(title) {
+    # alternate:
+    # sheets <- googlesheets::gs_ls()
+    # tolower(title) %in% tolower(sheets$sheet_title)
+    !is.null(googlesheets::gs_ls(regex = sprintf("^%s$", title)))
+}

@@ -1,6 +1,6 @@
 #' Select Section Sheets Based on Course, Year, Quarter, and/or Section
 #'
-#' \code{select_section_sheets} selects course spreadsheets. If any arguments
+#' \code{select_section_spreadsheets} selects course spreadsheets. If any arguments
 #' are provided, only sheets matching those parameters are shown. For example,
 #' if \code{course = 180}, only sheets for BIO 180 are returned
 #'
@@ -14,9 +14,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' select_section_sheets(course = 180)
+#' select_section_spreadsheets(course = 180)
 #' }
-select_section_sheets <- function(course = NULL,
+select_section_spreadsheets <- function(course = NULL,
                                   year = NULL,
                                   quarter = NULL,
                                   section = NULL) {

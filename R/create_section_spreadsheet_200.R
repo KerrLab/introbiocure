@@ -1,6 +1,7 @@
 #' Create a Google Sheet for a BIO 200 section
 #'
 #' @inheritParams build_section_spreadsheet_title
+#' @param master URL of the master spreadsheet
 #' @param num_groups The number of groups in the section
 #' @param create_group_0 Whether or not to create a group 0 for controls (default: TRUE)
 #' @param trim Should the resulting worksheet only include the necessary cells? (default: TRUE)
@@ -19,20 +20,26 @@
 #'                                      trim = TRUE,
 #'                                      ...)
 #' }
-create_section_spreadsheet_200 <- function(year,
+create_section_spreadsheet_200 <- function(master,
+                                           year,
                                            quarter,
                                            section,
                                            num_groups,
                                            create_group_0 = TRUE,
                                            trim = TRUE,
                                            ...) {
-    assertthat::assert_that(assertthat::is.count(year))
-    assertthat::assert_that(year >= as.numeric(format(Sys.time(), "%Y")))
-    assertthat::assert_that(is_quarter(quarter))
-    assertthat::assert_that(is_section(section))
-    assertthat::assert_that(assertthat::is.count(num_groups))
-    assertthat::assert_that(assertthat::is.flag(create_group_0))
-    assertthat::assert_that(assertthat::is.flag(trim))
+    # WHAT ABOUT SEQUENCE?
+    # Year, Quarter, Section, Group, StrainID, Pro.or.Des, Drug.at.Isolation, RIF.MIC, Base.Mutations, AA.Mutations, SequenceProblemIdentified
+
+    assertthat::assert_that(
+        assertthat::is.count(year),
+        year >= as.numeric(format(Sys.time(), "%Y")),
+        is_quarter(quarter),
+        is_section(section),
+        assertthat::is.count(num_groups),
+        assertthat::is.flag(create_group_0),
+        assertthat::is.flag(trim)
+    )
 
     section_title <- build_section_spreadsheet_title(
         course = 200,
@@ -41,29 +48,26 @@ create_section_spreadsheet_200 <- function(year,
         section = section
     )
 
-    # TODO: is this right?
-    section_data <- tibble::as.tibble(
-        expand.grid(
-            Year = year,
-            Quarter = toupper(quarter),
-            Section = toupper(section),
-            Group = seq(ifelse(create_group_0, 0, 1), num_groups),
-            Pro.or.Des = c("Progenitor", "Descendant"),
-            Cluster = c("I", "II"),
-            Direction = c("F", "R"),
-            Sequence = "",
-            Base.Mutations = "",
-            AA.Mutations = ""
-        )
-    ) %>%
-        dplyr::arrange_(c("Group", "Pro.or.Des", "Cluster", "Direction"))
+    master_data <- get_master_data(master = master)
 
-    googlesheets::gs_new(
+    # TODO: make data
+    # TODO: create sheet
+
+    section_data <- tibble::tibble()
+
+    s <- googlesheets::gs_new(
         title = section_title,
         input = section_data,
         trim = trim,
         ...
     )
 
-    # TODO: add course/quarter/section info to returned object
+    s$course <- 200
+    s$year <- year
+    s$quarter <- toupper(quarter)
+    s$section <- toupper(section)
+
+    message("Remember to manually add data validation checks to your spreadsheet")
+
+    s
 }

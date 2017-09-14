@@ -2,10 +2,13 @@
 % Please edit documentation in R/list_course_spreadsheets.R
 \name{list_course_spreadsheets}
 \alias{list_course_spreadsheets}
+\alias{sheet_exists}
 \title{List Existing Course Spreadsheets}
 \usage{
 list_course_spreadsheets(course = NULL, year = NULL, quarter = NULL,
   section = NULL)
+
+sheet_exists(title)
 }
 \arguments{
 \item{course}{The course number (e.g., 180 or 200) (optional)}
@@ -15,6 +18,8 @@ list_course_spreadsheets(course = NULL, year = NULL, quarter = NULL,
 \item{quarter}{The quarter (optional)}
 
 \item{section}{The section name (optional)}
+
+\item{title}{Spreadsheet title}
 }
 \value{
 A data frame with one row per matching sheet
@@ -24,6 +29,10 @@ A data frame with one row per matching sheet
 existing course spreadsheets. If any arguments are provided, only sheets
 matching those parameters are shown. For example, if \code{course = 180},
 only sheets for BIO 180 are returned.
+
+\code{sheet_exists} determines whether or not a spreadsheet with
+the given title exists. Note that the match is case sensitive, so "my sheet"
+does not match "My Sheet".
 }
 \examples{
 \dontrun{

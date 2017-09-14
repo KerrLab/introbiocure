@@ -4,10 +4,12 @@
 \alias{create_section_spreadsheet_200}
 \title{Create a Google Sheet for a BIO 200 section}
 \usage{
-create_section_spreadsheet_200(year, quarter, section, num_groups,
+create_section_spreadsheet_200(master, year, quarter, section, num_groups,
   create_group_0 = TRUE, trim = TRUE, ...)
 }
 \arguments{
+\item{master}{URL of the master spreadsheet}
+
 \item{year}{The year}
 
 \item{quarter}{The quarter. One of: "AU", "WI", "SP", "SU".}

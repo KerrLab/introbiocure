@@ -35,7 +35,7 @@ create_master_spreadsheet <- function(title, trim = FALSE, ...) {
     # )
 
     master_data <- tibble::tibble(
-        Year = "",
+        Year = 0,
         Quarter = "",
         Section = "",
         Group = "",
