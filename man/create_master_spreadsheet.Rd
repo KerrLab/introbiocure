@@ -19,6 +19,9 @@ A \code{\link[googlesheets]{googlesheet}} object
 \description{
 Create a Master Spreadsheet (180 + 200)
 }
+\note{
+An invalid first row is also created, because this is required by googlesheets.
+}
 \examples{
 \dontrun{
 ms <- create_master_spreadsheet()

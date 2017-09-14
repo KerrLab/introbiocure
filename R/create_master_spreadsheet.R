@@ -4,6 +4,8 @@
 #' @param trim Should the resulting worksheet only include the necessary cells? (default: FALSE)
 #' @param ... Additional arguments passed to \code{\link[googlesheets]{gs_new}}
 #'
+#' @note An invalid first row is also created, because this is required by googlesheets.
+#'
 #' @return A \code{\link[googlesheets]{googlesheet}} object
 #' @export
 #'

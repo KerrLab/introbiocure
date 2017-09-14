@@ -48,12 +48,38 @@ create_section_spreadsheet_200 <- function(master,
         section = section
     )
 
-    master_data <- get_master_data(master = master)
+    master_data <- get_master_data(master = master) %>%
+        dplyr::filter(
+            ProblemIdentified == "No",
+            Drug.at.Isolation %in% c("None", "Rifampicin")
+        ) %>%
+        dplyr::mutate(
+            RIF.MIC = dplyr::case_when(
+                Drug1 == "Rifampicin" ~ Drug1.MIC,
+                Drug2 == "Rifampicin" ~ Drug2.MIC,
+                TRUE ~ NA_real_
+            )
+        )
 
-    # TODO: make data
-    # TODO: create sheet
+    # TODO.
 
-    section_data <- tibble::tibble()
+    section_data <- tibble::tibble(
+        Year = year,
+        Quarter = toupper(quarter),
+        Section = toupper(section),
+        Group = seq(ifelse(create_group_0, 0, 1), num_groups),
+        StrainID = "TODO",
+        Pro.or.Des = "TODO",
+        Drug.at.Isolation = "TODO",
+        Fitness = "TODO",
+        RIF.MIC = "TODO",
+        Sequence = "",
+        Base.Mutations = "",
+        AA.Mutations = "",
+        SequenceProblemIdentified = "No"
+    )
+
+    # TODO: finish creating section_data
 
     s <- googlesheets::gs_new(
         title = section_title,
