@@ -124,6 +124,10 @@ get_section_data_200_key <- function(key, remove_duplicates = TRUE,
             Drug.at.Isolation = as.factor(Drug.at.Isolation)
     )
 
+    if (include_section_info) {
+        dAll$Section <- as.factor(dAll$Section)
+    }
+
     if (problems_as_logical) {
         dAll$SequenceProblemIdentified <- tolower(trimws(dAll$SequenceProblemIdentified)) == "yes"
     }

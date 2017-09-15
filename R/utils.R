@@ -6,8 +6,6 @@ magrittr::`%>%`
 #' @export
 googlesheets::gs_auth
 
-label_rifampicin <- "RIF"
-label_streptomycin <- "STR"
 
 # Column types for 180 sections
 col_types_180 <- readr::cols(

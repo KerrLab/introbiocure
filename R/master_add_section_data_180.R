@@ -43,8 +43,20 @@ master_add_section_data_180 <- function(master, d) {
         ) %>%
         dplyr::select(Year, Quarter, Section, Group, StrainID, Pro.or.Des, Drug.at.Isolation, Fitness, Drug1, Drug1.MIC, Drug2, Drug2.MIC, Base.Mutations, AA.Mutations, ProblemIdentified, SequenceProblemIdentified)
 
+    if (is.logical(dCleaned$ProblemIdentified)) {
+        dCleaned <- dCleaned %>%
+            dplyr::mutate(
+                ProblemIdentified = dplyr::case_when(
+                    as.character(ProblemIdentified) == "FALSE" ~ "No",
+                    as.character(ProblemIdentified) == "TRUE" ~ "Yes",
+                    TRUE ~ ""
+                )
+            )
+    }
+
     googlesheets::gs_add_row(
         ss = googlesheets::gs_url(master),
         input = dCleaned
     )
+    dCleaned
 }
