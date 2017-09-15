@@ -3,7 +3,10 @@
 \name{get_section_data_180}
 \alias{get_section_data_180}
 \alias{get_section_data_180_key}
+\alias{get_section_data_200}
+\alias{get_section_data_200_key}
 \alias{save_section_data_180}
+\alias{save_section_data_200}
 \title{Retrieve Data for a Given Section}
 \usage{
 get_section_data_180(url, remove_duplicates = TRUE,
@@ -12,7 +15,17 @@ get_section_data_180(url, remove_duplicates = TRUE,
 get_section_data_180_key(key, remove_duplicates = TRUE,
   problems_as_logical = FALSE, ...)
 
-save_section_data_180(path, url, remove_duplicates = TRUE, ...)
+get_section_data_200(url, remove_duplicates = TRUE,
+  include_section_info = TRUE, problems_as_logical = FALSE, ...)
+
+get_section_data_200_key(key, remove_duplicates = TRUE,
+  include_section_info = TRUE, problems_as_logical = FALSE, ...)
+
+save_section_data_180(path, url, remove_duplicates = TRUE,
+  problems_as_logical = FALSE, ...)
+
+save_section_data_200(path, url, remove_duplicates = TRUE,
+  include_section_info = TRUE, problems_as_logical = FALSE, ...)
 }
 \arguments{
 \item{url}{One or more sheet URLs}
@@ -20,27 +33,32 @@ save_section_data_180(path, url, remove_duplicates = TRUE, ...)
 \item{remove_duplicates}{Whether or not to remove sheets that are given more
 than once (default: \code{TRUE})}
 
-\item{problems_as_logical}{Whether or not to try to convert ProblemsIdentified
+\item{problems_as_logical}{Whether or not to try to convert ProblemIdentified
 values to logical (default: \code{FALSE})}
 
 \item{...}{Additional arguments (not currently used)}
 
 \item{key}{One or more sheet keys}
+
+\item{include_section_info}{Since BIO 200 sheets don't include Year, Quarter,
+and Section information in the sheet, those values can be added to the
+resulting data if this value is \code{TRUE} (default: \code{TRUE})}
 }
 \value{
 A data frame
 }
 \description{
-Both \code{get_section_data_180} and \code{get_section_data_180_key} retrieve
-data for a given section (or sections). \code{get_section_data_180} is given
-the URL(s) of section sheets, while \code{get_section_data_180_key} is given
-the unique keys.
+The \code{get_section_data} functions retrieve data corresponding to one or
+more section sheets and return a data frame.
+}
+\details{
+The \code{save_section_data} retrieve the data and save it to a CSV file.
 
-\code{save_section_data} saves data for a given section (URL) to
-a csv file
+These functions can operate either on sheet URLs or sheet keys (which are
+embedded in the sheet URL).
 }
 \examples{
 \dontrun{
-# TODO
+get_section_data("https://docs.google.com/spreadsheets/d/1SffJckl1oOQqE8lAfgNjNH9NKbbIXVw31rKBNIaUlQ4/")
 }
 }

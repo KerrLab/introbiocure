@@ -2,9 +2,9 @@
 #'
 #' @inheritParams build_section_spreadsheet_title
 #' @param num_groups The number of groups in the section
-#' @param create_group_0 Whether or not to create a group 0 for controls (default: TRUE)
+#' @param create_group_0 Whether or not to create a group 0 for controls (default: FALSE)
 #' @param start_strainid First strain ID to use. Can be numeric (e.g., 1000) or a strain ID ("AB000"). If none is provided, the StrainID column will be left empty.
-#' @param drugs_iso List of drugs used when creating progenitors (default: \code{c("None", "Rifampicin", "Streptomycin")})
+#' @param drugs_iso List of drugs used when creating progenitors (default: \code{c("None", "RIF", "STR")})
 #' @param trim Should the resulting worksheet only include the necessary cells? (default: TRUE)
 #' @param ... Additional arguments passed to \code{\link[googlesheets]{gs_new}}
 #'
@@ -17,7 +17,7 @@
 #'                                      quarter = "WI",
 #'                                      section = "C",
 #'                                      num_groups = 5,
-#'                                      create_group_0 = TRUE,
+#'                                      create_group_0 = FALSE,
 #'                                      start_strainid = 300,
 #'                                      trim = TRUE,
 #'                                      ...)
@@ -26,9 +26,9 @@ create_section_spreadsheet_180 <- function(year,
                                            quarter,
                                            section,
                                            num_groups,
-                                           create_group_0 = TRUE,
+                                           create_group_0 = FALSE,
                                            start_strainid = NULL,
-                                           drugs_iso = c("None", "Rifampicin", "Streptomycin"),
+                                           drugs_iso = c("None", "RIF", "STR"),
                                            trim = TRUE,
                                            ...) {
     assertthat::assert_that(assertthat::is.count(year))
@@ -104,7 +104,7 @@ create_section_spreadsheet_180 <- function(year,
     s$quarter <- toupper(quarter)
     s$section <- toupper(section)
 
-    message("Remember to manually add data validation checks to your spreadsheet")
+    message("** Remember to manually add data validation checks to your spreadsheet")
 
     s
 }

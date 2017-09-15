@@ -55,12 +55,13 @@ create_master_spreadsheet <- function(title, trim = FALSE, ...) {
         SequenceProblemIdentified = "Yes"
     )
 
-    googlesheets::gs_new(
+    s <- googlesheets::gs_new(
         title = title,
         input = master_data,
         trim = trim,
         ...
     )
 
-    message("Remember to manually add data validation checks to your spreadsheet")
+    message("** Remember to manually add data validation checks to your spreadsheet")
+    s
 }

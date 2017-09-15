@@ -5,12 +5,15 @@
 \alias{save_master_data}
 \title{Retrieve Data from Master Spreadsheet}
 \usage{
-get_master_data(master, ...)
+get_master_data(master, problems_as_logical = FALSE, ...)
 
 save_master_data(master, path, ...)
 }
 \arguments{
 \item{master}{URL of the master spreadsheet}
+
+\item{problems_as_logical}{Whether or not to try to convert ProblemIdentified
+and SequenceProblemIdentified values to logical (default: \code{FALSE})}
 
 \item{...}{Additional arguments passed to \code{\link[googlesheets]{gs_read}} (\code{get_master_data}) or \code{\link[readr]{write_csv}} (\code{save_master_data}).}
 

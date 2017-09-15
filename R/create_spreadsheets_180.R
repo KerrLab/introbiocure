@@ -4,19 +4,24 @@
 #' @param master URL of the master spreadsheet
 #' @param num_sections Total number of sections
 #' @param num_groups Number of groups for each section (default: 6)
-#' @param create_group_0 Whether or not to create a group 0 for controls (default: TRUE)
-#' @param drugs_iso List of drugs used when creating progenitors (default: \code{c("None", "Rifampicin", "Streptomycin")})
+#' @param create_group_0 Whether or not to create a group 0 for controls (default: FALSE)
+#' @param drugs_iso List of drugs used when creating progenitors (default: \code{c("None", "RIF", "STR")})
 #' @param trim Should the resulting worksheet only include the necessary cells? (default: TRUE)
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' create_spreadsheets_180("Intro Bio Cure Master", year = 2018, quarter = "AU", num_sections = 3)
+#' create_spreadsheets_180(
+#'     master = "https://docs.google.com/spreadsheets/d/1aOG8u-r1pObn2_OiiUx530eo2iACrU4nbvQ_9gmdcUw/",
+#'     year = 2018,
+#'     quarter = "AU",
+#'     num_sections = 3
+#' )
 #' }
 create_spreadsheets_180 <- function(master, year, quarter, num_sections,
-                                    num_groups = 6, create_group_0 = TRUE,
-                                    drugs_iso = c("None", "Rifampicin", "Streptomycin"),
+                                    num_groups = 6, create_group_0 = FALSE,
+                                    drugs_iso = c("None", "RIF", "STR"),
                                     trim = TRUE) {
     assertthat::assert_that(
         assertthat::is.string(master),
@@ -40,7 +45,7 @@ create_spreadsheets_180 <- function(master, year, quarter, num_sections,
             quarter = quarter,
             section = number_as_section(section_number),
             num_groups = num_groups,
-            create_group_0 = TRUE,
+            create_group_0 = create_group_0,
             start_strainid = strainid_nums[1 + (strains_per_section * (section_number - 1))],
             drugs_iso = drugs_iso,
             trim = trim
