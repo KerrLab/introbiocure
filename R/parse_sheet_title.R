@@ -16,13 +16,6 @@ parse_sheet_title <- function(title) {
         pattern = "^BIO(180|200) (AU|WI|SP|SU)([0-9]{4}) Section ([A-Za-z]{1,2})$"
     )
 
-    # list(
-    #     Course = as.integer(x[,2]),
-    #     Year = as.integer(x[,4]),
-    #     Quarter = x[,3],
-    #     Section = x[,5]
-    # )
-
     apply(x, 1, function(x) {
         list(
             Course = as.integer(x[2]),
@@ -30,5 +23,4 @@ parse_sheet_title <- function(title) {
             Quarter = x[3],
             Section = x[5])
     })
-
 }
