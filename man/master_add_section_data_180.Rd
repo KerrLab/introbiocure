@@ -2,7 +2,7 @@
 % Please edit documentation in R/master_add_section_data_180.R
 \name{master_add_section_data_180}
 \alias{master_add_section_data_180}
-\title{Insert Section Data into Master Sheet}
+\title{Insert Section Data from BIO 180 into Master Sheet}
 \usage{
 master_add_section_data_180(master, d)
 }
@@ -12,7 +12,7 @@ master_add_section_data_180(master, d)
 \item{d}{Data frame containing section data (see \code{\link{get_section_data_180}})}
 }
 \description{
-Insert Section Data into Master Sheet
+Insert Section Data from BIO 180 into Master Sheet
 }
 \examples{
 \dontrun{

@@ -1,4 +1,4 @@
-#' Insert Section Data into Master Sheet
+#' Insert Section Data from BIO 180 into Master Sheet
 #'
 #' @param master URL of the master spreadsheet
 #' @param d Data frame containing section data (see \code{\link{get_section_data_180}})
