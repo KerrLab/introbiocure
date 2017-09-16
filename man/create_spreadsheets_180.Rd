@@ -25,12 +25,15 @@ create_spreadsheets_180(master, year, quarter, num_sections, num_groups = 6,
 
 \item{trim}{Should the resulting worksheet only include the necessary cells? (default: TRUE)}
 }
+\value{
+A list of \code{\link[googlesheets]{googlesheet}} objects, one per section
+}
 \description{
 Create all Section Spreadsheets for BIO 180 for a Given Quarter
 }
 \examples{
 \dontrun{
-create_spreadsheets_180(
+my_180_sheets <- create_spreadsheets_180(
     master = "https://docs.google.com/spreadsheets/d/1aOG8u-r1pObn2_OiiUx530eo2iACrU4nbvQ_9gmdcUw/",
     year = 2018,
     quarter = "AU",

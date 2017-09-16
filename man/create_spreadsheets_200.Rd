@@ -30,7 +30,7 @@ Create all Section Spreadsheets for BIO 180 for a Given Quarter
 }
 \examples{
 \dontrun{
-create_spreadsheets_200(
+my_200_sheets <- create_spreadsheets_200(
     master = "https://docs.google.com/spreadsheets/d/1aOG8u-r1pObn2_OiiUx530eo2iACrU4nbvQ_9gmdcUw/",
     year = 2018,
     quarter = "AU",

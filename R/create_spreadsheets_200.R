@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' create_spreadsheets_200(
+#' my_200_sheets <- create_spreadsheets_200(
 #'     master = "https://docs.google.com/spreadsheets/d/1aOG8u-r1pObn2_OiiUx530eo2iACrU4nbvQ_9gmdcUw/",
 #'     year = 2018,
 #'     quarter = "AU",
@@ -127,7 +127,6 @@ create_spreadsheets_200 <- function(master, year, quarter, num_sections,
             s
         })
 
-
-    message("* Remember to manually add data validation checks to your spreadsheets")
+    message("* Remember to manually add protected regions and data validation checks to your spreadsheets")
     sheets
 }
