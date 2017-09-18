@@ -1,0 +1,204 @@
+---
+title: "Working with introbiocure"
+author: "Brian Connelly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\code{introbiocure} is a R package containing a set of tools that allow you to create, update, combine, and manipulate data from BIO 180 and BIO 200.
+All data are stored as Google spreadsheets.
+Each section in BIO 180 and 200 has its own spreadsheet, which students add data to during the quarter.
+At the end of each quarter, these data are added to the *Master Spreadsheet*, which contains information about all strains used in these courses.
+
+
+## Installation
+
+To use \code{introbiocure}, you'll first need to install a recent version of [RStudio](https://rstudio.com).
+After that, you can install \code{introbiocure} by executing this code in the *Console* window of RStudio:
+
+```{r Install introbiocure, eval=FALSE}
+install.packages("devtools")
+devtools::install_github("kerrlab/introbiocure", build_vignettes = TRUE)
+```
+
+This will also install some additional packages that \code{introbiocure} requires.
+
+
+## Creating the Master Spreadsheet
+
+TODO
+
+**Note that all functions in \code{introbiocure} have help pages**, which you can view by typing `?` followed by the function name in the Console.
+For example, to get help about `create_master_spreadsheet`, run:
+
+```{r Getting Help, eval=FALSE}
+?create_master_spreadsheet
+```
+
+TODO: note on technical issues like creating a dummy first row.
+
+
+
+## Creating Section Spreadsheets for BIO 180
+
+At the beginning of each quarter, the course coordinator creates a collection of Google spreadsheets, one for each section.
+This can be done using the `create_spreadsheets_180` function.
+This function requires some information about the class, such as the quarter and the number of sections.
+This information is provided as *arguments* to `create_spreadsheets_180`.
+
+For example, let's create spreadsheets for Spring 2018, which has 10 sections, each with 6 groups of students.
+
+```{r Creating 180 Spreadsheets, eval=FALSE}
+sheets_180 <- create_spreadsheets_180(
+    master = master_sheet_url, # Note: you'll need to provide a valid URL here.
+    year = 2018,
+    quarter = "SP",
+    num_sections = 10,
+    num_groups = 6
+)
+```
+
+This creates a spreadsheet for each of the sections (named "BIO180 SP2018 Section A", for example).
+The result, called `sheets_180` is a list of objects for each section spreadsheet.
+You can either ignore these values or use the [googlesheets](https://github.com/jennybc/googlesheets) package to do different things with them.
+For example, to open up the first spreadsheet:
+
+```{r Opening a Sheet, eval=FALSE}
+library(googlesheets)
+
+gs_browse(sheets_180[[1]])
+```
+
+You can also use the `list_course_spreadsheets()` function to view all of your spreadsheets.
+
+
+### Making Spreadsheets Public
+
+At first, each of the spreadsheets will be Private, so they can only be accessed by the course coordinator.
+Each sheet should now be made public (to those who have the URL).
+
+TODO: how to share
+
+The spreadsheet URLs can be quickly viewed by running the following code, which shows the URL for each section:
+
+```{r Getting Spreadsheet URLs, eval=FALSE}
+vapply(sheets_180, function(x) x$browser_url, FUN.VALUE = character(1))
+```
+
+
+### Protecting Columns
+
+To try to keep each spreadsheet error-free, we now want to *Protect* certain columns to prevent students from editing them.
+We'll also add some Data Validation to columns to make sure what gets entered is valid.
+Unfortunately, this process cannot be automated, so each spreadsheet will need to be manually set up.
+Because of this, it may be best that individual TAs do this for their sections.
+
+To Protect a column, click on that column's header, and then click on the little menu that appears to the right.
+Now select **Protect range...**, enter a description (e.g., "protected columns"), and select **Set permissions**.
+In the next window, select **Restrict who can edit this range**, and choose **Only you**.
+
+We're going to want to protect the *Year*, *Quarter*, *Section*, *Group*, *StrainID*, *Pro.or.Des*, and *Drug.at.Isolation* columns.
+This can be done at once by selecting all of these columns, and choosing to **Protect range...** on that selection.
+
+TODO: images.
+
+### Data Validation
+
+Now, we're going to add some data validation to certain columns to help ensure that students enter appropriate values.
+Do add validation, select a column, and choose **Data validation...** from the dropdown menu.
+Add the following data validation rules to these columns.
+For each, choose to **Show warning** for invalid data.
+
+- **Fitness**: Number, greater than or equal to 0.
+- **Drug1** and **Drug2**: List of items, "RIF,STR"
+- **Drug1.MIC** and **Drug2.MIC**: Number, greater than or equal to 0.
+- **ProblemIdentified**: List of items, "Yes,No"
+
+Now, when a cell contains an invalid value, a little red triangle will appear in its corner.
+Note that because Google Sheets doesn't differentiate between a header row (the first row) and the rest, some header cells will be marked.
+
+
+## Adding BIO 180 Data to the Master Spreadsheet
+
+At the end of the quarter, TAs should check over their section data to make sure it's valid.
+Once this is done, the data can be added to the master spreadsheet.
+This is done by first retrieving the data for the section, and adding it to the master spreadsheet.
+
+First, to get the data, we use `get_section_data_180`, passing in the URL of a section spreadsheet.
+
+```{r Adding 180 Data to Master A, eval=FALSE}
+# Note: you'll need to provide a valid URL
+section_data <- get_section_data_180(url = my_section_url)
+```
+
+A TA with multiple sections can provide multiple section spreadsheet URLS:
+
+```{r Adding 180 Data to Master B, eval=FALSE}
+# Note: you'll need to provide valid URLs
+section_data <- get_section_data_180(url = c(my_section_1_url, my_section_2_url, my_section_3_url))
+```
+
+Now, we can add the section to the master data using `master_add_section_data_180`.
+This will catch most basic errors, but please make sure that your section data are valid before running this.
+
+```{r Adding 180 Data to Master C, eval=FALSE}
+master_add_section_data_180(master_sheet_url, section_data)
+```
+
+
+## Creating Spreadsheets for BIO 200
+
+The process of creating spreadsheets for BIO 200 is similar to 180.
+The course coordinator will give the `create_spreadsheets_200` function information about the quarter and the number of sections.
+They will also provide the URL of the master spreadsheet so that strains can be assigned to each group.
+
+For example, here we'll create spreadsheets for a fictional Autumn 2018 quarter where there are 4 groups:
+
+```{r Creating 200 Spreadsheets, eval=FALSE}
+sheets_200 <- create_spreadsheets_200(
+    master = master_sheet_url,
+    year = 2018,
+    quarter = "AU",
+    num_sections = 4,
+    num_groups = 6
+)
+```
+
+As with `create_spreadsheets_180`, the result---`sheets_200`---is a list of spreadsheet objects.
+
+
+## Adding BIO 200 Data to the Master Spreadsheet
+
+TODO
+
+
+## Function Reference
+
+These are the primary functions provided by \code{introbiocure}.
+You can view more information for a given function in its help page (type `?<function name>`).
+
+| Function                          | Description                                                     |
+|-----------------------------------|-----------------------------------------------------------------|
+| `create_master_spreadsheet`       | Create a new master spreadsheet, either empty or with data      |
+| `create_section_spreadsheets_180` | Create spreadsheets for BIO 180 sections                        |
+| `create_section_spreadsheets_200` | Create spreadsheets for BIO 200 sections                        |
+| `list_course_spreadsheets`        | List your section spreadsheets. Can specify course/quarter/etc. |
+| `master_add_section_data_180`     | Add BIO 180 data to the master spreadsheet                      |
+| `master_add_section_data_200`     | Merge in BIO 200 data with the master spreadsheet               |
+| `get_master_data`                 | Get data from the master spreadsheet as a data frame            |
+| `get_section_data_180`            | Get data from one or more BIO 180 sections as a data frame      |
+| `get_section_data_200`            | Get data from one or more BIO 200 sections as a data frame      |
+| `save_master_data`                | Save data from the master spreadsheet to a CSV file             |
+| `save_section_data_180`           | Save data from one or more BIO 180 sections as a CSV file       |
+| `save_section_data_200`           | Save data from one or more BIO 200 sections as a CSV file       |
+
+
+

@@ -42,7 +42,7 @@ create_master_spreadsheet <- function(title, data = NULL, trim = FALSE, ...) {
         data <- tibble::tibble(
             Year = 0,
             Quarter = "",
-            Section = "",
+            Section = "ZZ",
             Group = "",
             StrainID = "AA000",
             Pro.or.Des = "",
