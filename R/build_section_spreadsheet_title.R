@@ -1,4 +1,4 @@
-#' Title TODO
+#' Create A Spreadsheet Title for a Course Section
 #'
 #' @param course The course number (e.g., 180 or 200)
 #' @param year The year

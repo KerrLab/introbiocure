@@ -4,10 +4,12 @@
 \alias{create_master_spreadsheet}
 \title{Create a Master Spreadsheet (180 + 200)}
 \usage{
-create_master_spreadsheet(title, trim = FALSE, ...)
+create_master_spreadsheet(title, data = NULL, trim = FALSE, ...)
 }
 \arguments{
 \item{title}{Title for the spreadsheet}
+
+\item{data}{Optional, A data frame containing data to be used (default: NULL)}
 
 \item{trim}{Should the resulting worksheet only include the necessary cells? (default: FALSE)}
 

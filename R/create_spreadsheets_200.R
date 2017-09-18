@@ -127,6 +127,6 @@ create_spreadsheets_200 <- function(master, year, quarter, num_sections,
             s
         })
 
-    message("* Remember to manually add protected regions and data validation checks to your spreadsheets")
+    message("** Remember to manually add protected regions and data validation checks to your spreadsheets")
     sheets
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/master_add_section_data_200.R
 \name{master_add_section_data_200}
 \alias{master_add_section_data_200}
-\title{Insert Section Data from BIO 200 into Master Sheet}
+\title{Merge Section Data with BIO 200 into Master Sheet}
 \usage{
 master_add_section_data_200(master, d)
 }
@@ -11,8 +11,11 @@ master_add_section_data_200(master, d)
 
 \item{d}{Data frame containing section data (see \code{\link{get_section_data_180}})}
 }
+\value{
+A data frame containing the updated master data
+}
 \description{
-Insert Section Data from BIO 200 into Master Sheet
+Merge Section Data with BIO 200 into Master Sheet
 }
 \examples{
 \dontrun{
