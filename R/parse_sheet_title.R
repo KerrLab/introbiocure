@@ -13,7 +13,7 @@ parse_sheet_title <- function(title) {
 
     x <- stringi::stri_match_first_regex(
         str = title,
-        pattern = "^BIO(180|200) (AU|WI|SP|SU)([0-9]{4}) Section ([A-Za-z]{1,2})$"
+        pattern = "BIO(180|200) (AU|WI|SP|SU)([0-9]{4}) Section ([A-Za-z]{1,2})"
     )
 
     apply(x, 1, function(x) {

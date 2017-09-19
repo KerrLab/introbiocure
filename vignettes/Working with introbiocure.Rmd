@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-\code{introbiocure} is a R package containing a set of tools that allow you to create, update, combine, and manipulate data from BIO 180 and BIO 200.
+`introbiocure` is a R package containing a set of tools that allow you to create, update, combine, and manipulate data from BIO 180 and BIO 200.
 All data are stored as Google spreadsheets.
 Each section in BIO 180 and 200 has its own spreadsheet, which students add data to during the quarter.
 At the end of each quarter, these data are added to the *Master Spreadsheet*, which contains information about all strains used in these courses.
@@ -21,30 +21,50 @@ At the end of each quarter, these data are added to the *Master Spreadsheet*, wh
 
 ## Installation
 
-To use \code{introbiocure}, you'll first need to install a recent version of [RStudio](https://rstudio.com).
-After that, you can install \code{introbiocure} by executing this code in the *Console* window of RStudio:
+To use `introbiocure`, you'll first need to install a recent version of [RStudio](https://rstudio.com).
+After that, you can install `introbiocure` by executing this code in the *Console* window of RStudio:
 
 ```{r Install introbiocure, eval=FALSE}
 install.packages("devtools")
 devtools::install_github("kerrlab/introbiocure", build_vignettes = TRUE)
 ```
 
-This will also install some additional packages that \code{introbiocure} requires.
+This will also install some additional packages that `introbiocure` requires.
+
+
+## Logging Into Your Google Account
+
+When you use `introbiocure` for the first time, you will automatically asked to log in to your Google account.
+If you'd like to get this out of the way right now, you can run:
+
+```{r Authenticate with Google, eval=FALSE}
+googlesheets::gs_auth()
+```
 
 
 ## Creating the Master Spreadsheet
 
-TODO
+Before we can create spreadsheets for either course, we'll need to create the Master Spreadsheet.
+The Master Spreadsheet contains information about all of the strains studied in BIO 180 (fitness, MIC) and BIO 200 (mutations).
 
-**Note that all functions in \code{introbiocure} have help pages**, which you can view by typing `?` followed by the function name in the Console.
+```{r Creating Master Sheet, eval=FALSE}
+master_sheet <- create_master_spreadsheet(title = "Intro Bio Master Spreadsheet")
+```
+
+Here, `create_master_spreadsheet` creates a new Master Spreadsheet named *Intro Bio Master Spreadsheet*.
+
+![Master Spreadsheet View](img/master-example.png)
+
+**Note that all functions in `introbiocure` have help pages**, which you can view by typing `?` followed by the function name in the Console.
 For example, to get help about `create_master_spreadsheet`, run:
 
 ```{r Getting Help, eval=FALSE}
 ?create_master_spreadsheet
 ```
 
-TODO: note on technical issues like creating a dummy first row.
-
+For technical reasons, this master spreadsheet will contain one "dummy row" containing invalid data.
+This must be left in place until some valid data have been added later, such as at the end of the first quarter.
+It can then be removed manually.
 
 
 ## Creating Section Spreadsheets for BIO 180
@@ -77,6 +97,8 @@ library(googlesheets)
 gs_browse(sheets_180[[1]])
 ```
 
+![BIO 180 Sheet Example](img/bio180-example.png)
+
 You can also use the `list_course_spreadsheets()` function to view all of your spreadsheets.
 
 
@@ -84,14 +106,28 @@ You can also use the `list_course_spreadsheets()` function to view all of your s
 
 At first, each of the spreadsheets will be Private, so they can only be accessed by the course coordinator.
 Each sheet should now be made public (to those who have the URL).
-
-TODO: how to share
-
 The spreadsheet URLs can be quickly viewed by running the following code, which shows the URL for each section:
 
 ```{r Getting Spreadsheet URLs, eval=FALSE}
 vapply(sheets_180, function(x) x$browser_url, FUN.VALUE = character(1))
 ```
+
+
+To share a spreadsheet, first view it in your web browser.
+Click on the **Share** button in the upper right corner, and then click on **Advanced** in the dialog window that appears.
+
+![Clicking on the Share Button](img/sharing-button.png)
+
+![The main sharing dialog window](img/sharing-main.png)
+
+Now in the next dialog window that appears, click on **Change...** under *Who has access*.
+
+![The advanced sharing dialog window](img/sharing-advanced.png)
+Finally, select **On - Anyone with the link**, and click on the **Save** button.
+
+![Making the spreadsheet public](img/sharing-on.png)
+
+You can then exit from the main sharing dialog window by clicking on the **Done** button.
 
 
 ### Protecting Columns
@@ -102,13 +138,25 @@ Unfortunately, this process cannot be automated, so each spreadsheet will need t
 Because of this, it may be best that individual TAs do this for their sections.
 
 To Protect a column, click on that column's header, and then click on the little menu that appears to the right.
-Now select **Protect range...**, enter a description (e.g., "protected columns"), and select **Set permissions**.
+Now select **Protect range...**.
+
+![Selecting to protect a column from the dropdown](img/protect-menu.png)
+
+In the box that appears in the upper right, enter a description (e.g., "protected columns"), and select **Set permissions**.
+
+![Main permissions box](img/protect-name.png)
+
 In the next window, select **Restrict who can edit this range**, and choose **Only you**.
+
+![Restricting access](img/protect-restrict.png)
+
 
 We're going to want to protect the *Year*, *Quarter*, *Section*, *Group*, *StrainID*, *Pro.or.Des*, and *Drug.at.Isolation* columns.
 This can be done at once by selecting all of these columns, and choosing to **Protect range...** on that selection.
 
-TODO: images.
+![Protecting multiple columns](img/protect-multiple.png)
+
+
 
 ### Data Validation
 
@@ -153,6 +201,8 @@ This will catch most basic errors, but please make sure that your section data a
 master_add_section_data_180(master_sheet_url, section_data)
 ```
 
+Note that if the Master Spreadsheet still has the dummy first row, that can be manually removed once valid data have been added.
+
 
 ## Creating Spreadsheets for BIO 200
 
@@ -174,15 +224,52 @@ sheets_200 <- create_spreadsheets_200(
 
 As with `create_spreadsheets_180`, the result---`sheets_200`---is a list of spreadsheet objects.
 
+![Example BIO 200 Spreadsheet](img/bio200-example.png)
+
+As with BIO 180 Spreadsheets, you'll want to protect some columns and add validation to others.
+
+- Protect columns: **Group**, **StrainID**, **Pro.or.Des**, **Drug.at.Isolation**, **Fitness**, and **RIF.MIC**
+- Add validation to **ProblemIdentified**: List of items, "Yes,No"
+
 
 ## Adding BIO 200 Data to the Master Spreadsheet
 
-TODO
+Just like adding BIO 180 data to the Master Spreadsheet, adding BIO 200 data requires first validating the data, then downloading it, then adding it to the Master Spreadsheet.
+Because we're merging the genetic data from BIO 200 with existing data (and a technical issue with Google sheets), this process involves one additional step.
+
+First, we can retrieve the data for one or more BIO 200 sections using `get_section_data_200`:
+
+```{r Adding 200 Data to Master A, eval=FALSE}
+# Note: you'll need to provide a valid URL
+section_data <- get_section_data_200(url = my_section_url)
+```
+
+We can then merge these data with the existing data in the master:
+
+```{r Adding 200 Data to Master B, eval=FALSE}
+new_master_data <- master_add_section_data_200(master_sheet_url, section_data)
+```
+
+
+**Importantly, this doesn't update the Master Spreadsheet.**
+This is due to some technical limitations with working with spreadsheets programmatically.
+Instead, the updated master data are stored in a data frame called `new_master_data`.
+Using these data, we now have to create a *new* Master Spreadsheet, which we will use for all future function calls.
+
+We can do this using the `create_master_spreadsheet` again, this time providing initial data:
+
+```{r Adding 200 Data to Master C, eval=FALSE}
+new_master_sheet <- create_master_spreadsheet(title = "New Intro Bio Master Spreadsheet", data = new_master_data)
+```
+
+Of course, we could give this new spreadsheet the exact same title as before, since the new spreadsheet would have a new unique URL.
+This could make it somewhat difficult to remember which is which, though.
+A good approach might be to use the same title, but then re-name the old master (e.g., "Intro Bio Master Spreadsheet 2018-09-15" if you replaced it on September 15, 2018).
 
 
 ## Function Reference
 
-These are the primary functions provided by \code{introbiocure}.
+These are the primary functions provided by `introbiocure`.
 You can view more information for a given function in its help page (type `?<function name>`).
 
 | Function                          | Description                                                     |
@@ -199,6 +286,4 @@ You can view more information for a given function in its help page (type `?<fun
 | `save_master_data`                | Save data from the master spreadsheet to a CSV file             |
 | `save_section_data_180`           | Save data from one or more BIO 180 sections as a CSV file       |
 | `save_section_data_200`           | Save data from one or more BIO 200 sections as a CSV file       |
-
-
 
