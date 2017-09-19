@@ -1,6 +1,6 @@
 Package: introbiocure
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Tools for Managing BIO 180 and BIO 200
 Version: 0.1.0
 Authors@R: c(person(given = "Brian", family = "Connelly", email = "bdc@bconnelly.net",
                     role = c("aut", "cre"))) 
@@ -11,7 +11,9 @@ Encoding: UTF-8
 LazyData: true
 Imports: assertthat,
     dplyr,
+    ggplot2,
     googlesheets,
+    grid,
     magrittr,
     purrr,
     readr,

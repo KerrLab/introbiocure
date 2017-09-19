@@ -71,7 +71,7 @@ create_spreadsheets_200 <- function(master, year, quarter, num_sections,
             stop(sprintf("Number of valid control strains is insufficient: %d needed, %d available", num_controls_needed, nrow(valid_controls)))
         }
 
-        dControl <- head(valid_controls, n = num_controls_needed) %>%
+        dControl <- utils::head(valid_controls, n = num_controls_needed) %>%
             dplyr::mutate(
                 Section200 = number_as_section(rep(seq(1, num_sections), each = 2)),
                 Group200 = 0

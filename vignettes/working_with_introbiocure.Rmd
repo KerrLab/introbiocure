@@ -51,7 +51,7 @@ The Master Spreadsheet contains information about all of the strains studied in 
 master_sheet <- create_master_spreadsheet(title = "Intro Bio Master Spreadsheet")
 ```
 
-Here, `create_master_spreadsheet` creates a new Master Spreadsheet named *Intro Bio Master Spreadsheet*.
+Here, the `create_master_spreadsheet` command (known as a *function*) creates a new Master Spreadsheet named *Intro Bio Master Spreadsheet*.
 
 ![Master Spreadsheet View](img/master-example.png)
 
@@ -66,6 +66,24 @@ For technical reasons, this master spreadsheet will contain one "dummy row" cont
 This must be left in place until some valid data have been added later, such as at the end of the first quarter.
 It can then be removed manually.
 
+### Protecting and Validating Cells in the Master Spreadsheet
+
+As described in the next section, you should now protect the first row of data (the column names) and add data validation to the columns.
+This will help prevent errors from going undetected.
+
+Add the following data validation rules to these columns.
+- **Year**: Number, greater than or equal to 2017.
+- **Quarter**: List of items, "AU,WI,SP,SU UZZ"
+- **Section**: Text
+- **Group**: Number, greater than or equal to 0.
+- **StrainID**: Text
+- **Pro.or.Des**: List of items, "Progenitor,Descendent"
+- **Drug.at.Isolation**: List of items, "None,RIF,STR"
+- **Fitness**: Number, greater than or equal to 0.
+- **Drug1** and **Drug2**: List of items, "RIF,STR"
+- **Drug1.MIC** and **Drug2.MIC**: Number, greater than or equal to 0.
+- **Base.Mutations** and **AA.Mutations**: Text
+- **ProblemIdentified** and **SequenceProblemIdentified**: List of items, "Yes,No"
 
 ## Creating Section Spreadsheets for BIO 180
 
@@ -85,6 +103,8 @@ sheets_180 <- create_spreadsheets_180(
     num_groups = 6
 )
 ```
+
+Here, `year` must be a 4-digit number, `quarter` must be a capitalized, two-letter string (one of "AU", "WI", "SP", "SU"), and `num_sections` and `num_groups` must be a number greater than 0.
 
 This creates a spreadsheet for each of the sections (named "BIO180 SP2018 Section A", for example).
 The result, called `sheets_180` is a list of objects for each section spreadsheet.
@@ -135,7 +155,7 @@ You can then exit from the main sharing dialog window by clicking on the **Done*
 To try to keep each spreadsheet error-free, we now want to *Protect* certain columns to prevent students from editing them.
 We'll also add some Data Validation to columns to make sure what gets entered is valid.
 Unfortunately, this process cannot be automated, so each spreadsheet will need to be manually set up.
-Because of this, it may be best that individual TAs do this for their sections.
+Because of this, it may be best that individual TAs do this for their sections before the quarter begins.
 
 To Protect a column, click on that column's header, and then click on the little menu that appears to the right.
 Now select **Protect range...**.
@@ -156,12 +176,16 @@ This can be done at once by selecting all of these columns, and choosing to **Pr
 
 ![Protecting multiple columns](img/protect-multiple.png)
 
+You should also protect the first *row* of data, so that the column names remain consistent.
+To do this, select the first row by clicking on the **1** at the far left, right clicking (or two-finger tapping on a Mac) and selecting **Protect range...** from the dropdown menu.
+If you're not able to get to the dropdown menu, you can select **Protected sheets and ranges...** from the **Data** menu.
+Now name the protected range and set who can edit the cells just as you did before with columns.
 
 
 ### Data Validation
 
 Now, we're going to add some data validation to certain columns to help ensure that students enter appropriate values.
-Do add validation, select a column, and choose **Data validation...** from the dropdown menu.
+To add validation, select a column, and choose **Data validation...** from the dropdown menu.
 Add the following data validation rules to these columns.
 For each, choose to **Show warning** for invalid data.
 
@@ -170,7 +194,12 @@ For each, choose to **Show warning** for invalid data.
 - **Drug1.MIC** and **Drug2.MIC**: Number, greater than or equal to 0.
 - **ProblemIdentified**: List of items, "Yes,No"
 
+![Setting data validation rules for Fitness](img/validation-dialog.png)
+
 Now, when a cell contains an invalid value, a little red triangle will appear in its corner.
+
+![Validation error. Fitness values can't be negative.](img/validation-message.png)
+
 Note that because Google Sheets doesn't differentiate between a header row (the first row) and the rest, some header cells will be marked.
 
 
@@ -180,7 +209,7 @@ At the end of the quarter, TAs should check over their section data to make sure
 Once this is done, the data can be added to the master spreadsheet.
 This is done by first retrieving the data for the section, and adding it to the master spreadsheet.
 
-First, to get the data, we use `get_section_data_180`, passing in the URL of a section spreadsheet.
+First, to get the data, we use `get_section_data_180`, giving it the URL of a section spreadsheet.
 
 ```{r Adding 180 Data to Master A, eval=FALSE}
 # Note: you'll need to provide a valid URL
@@ -207,8 +236,8 @@ Note that if the Master Spreadsheet still has the dummy first row, that can be m
 ## Creating Spreadsheets for BIO 200
 
 The process of creating spreadsheets for BIO 200 is similar to 180.
-The course coordinator will give the `create_spreadsheets_200` function information about the quarter and the number of sections.
-They will also provide the URL of the master spreadsheet so that strains can be assigned to each group.
+The course coordinator will give the `create_spreadsheets_200` function the Master Spreadsheet's URL and information about the quarter and the number of sections.
+Behind the scenes, this function finds strains from BIO 180 that have not previously been used for BIO 200 and assigns these strains to groups in each section.
 
 For example, here we'll create spreadsheets for a fictional Autumn 2018 quarter where there are 4 groups:
 
@@ -222,6 +251,8 @@ sheets_200 <- create_spreadsheets_200(
 )
 ```
 
+Here, `year` must be a 4-digit number, `quarter` must be a capitalized, two-letter string (one of "AU", "WI", "SP", "SU"), and `num_sections` and `num_groups` must be a number greater than 0.
+
 As with `create_spreadsheets_180`, the result---`sheets_200`---is a list of spreadsheet objects.
 
 ![Example BIO 200 Spreadsheet](img/bio200-example.png)
@@ -229,6 +260,7 @@ As with `create_spreadsheets_180`, the result---`sheets_200`---is a list of spre
 As with BIO 180 Spreadsheets, you'll want to protect some columns and add validation to others.
 
 - Protect columns: **Group**, **StrainID**, **Pro.or.Des**, **Drug.at.Isolation**, **Fitness**, and **RIF.MIC**
+- Protect the first row, which contains the column names
 - Add validation to **ProblemIdentified**: List of items, "Yes,No"
 
 
@@ -252,8 +284,8 @@ new_master_data <- master_add_section_data_200(master_sheet_url, section_data)
 
 
 **Importantly, this doesn't update the Master Spreadsheet.**
-This is due to some technical limitations with working with spreadsheets programmatically.
 Instead, the updated master data are stored in a data frame called `new_master_data`.
+This is due to some technical limitations with working with spreadsheets programmatically.
 Using these data, we now have to create a *new* Master Spreadsheet, which we will use for all future function calls.
 
 We can do this using the `create_master_spreadsheet` again, this time providing initial data:
@@ -265,6 +297,14 @@ new_master_sheet <- create_master_spreadsheet(title = "New Intro Bio Master Spre
 Of course, we could give this new spreadsheet the exact same title as before, since the new spreadsheet would have a new unique URL.
 This could make it somewhat difficult to remember which is which, though.
 A good approach might be to use the same title, but then re-name the old master (e.g., "Intro Bio Master Spreadsheet 2018-09-15" if you replaced it on September 15, 2018).
+Because of this complication, it's best to merge *all* of the sections' data at once by providing `get_section_data_200` with the URLs of all section spreadsheets.
+
+```{r Adding 200 Data to Master D, eval=FALSE}
+# Note: you'll need to provide valid URLs
+section_data <- get_section_data_200(url = c(section_A_url, section_B_url, ..., section_X_url))
+```
+
+**You should also protect cells and add data validation to this new Master Spreadsheet.**
 
 
 ## Function Reference
