@@ -26,7 +26,7 @@
 #' @param title A title for the plot. If not provided, one will be created using the \code{Section} and \code{Group}.
 #' @param subtitle A subtitle for the plot. If not provided, one will be created using the \code{Drug}.
 #' @param threshold Value above which values can be trusted. If a value is below the threshold, that well will be highlighted in red (default: \code{0}).
-#' @param absorbance.max Value to be set as the maximum possible absorbance. Useful for having consistent greyscale across many plots (default: \code{3}, which is approx. where the spex maxes out).
+#' @param absorbance_max Value to be set as the maximum possible absorbance. Useful for having consistent greyscale across many plots (default: \code{3}, which is approx. where the spex maxes out).
 #' @param show.values Whether or not to display the absorbance values for each well (default: \code{FALSE})
 #' @param show.unused Whether or not to display unused wells. (default: \code{FALSE})
 #' @param ... Additional arguments (not currently used)
@@ -39,7 +39,7 @@
 #' \dontrun{
 #' plot_mic_plate(my_mic_data)
 #' }
-plot_mic_plate <- function(d, title = NULL, subtitle = NULL, threshold = 0, absorbance.max = 3, show.values = FALSE, show.unused = FALSE, ...) {
+plot_mic_plate <- function(d, title = NULL, subtitle = NULL, threshold = 0, absorbance_max = 3, show.values = FALSE, show.unused = FALSE, ...) {
 
     assertthat::assert_that(
         is.data.frame(d),
@@ -86,7 +86,7 @@ plot_mic_plate <- function(d, title = NULL, subtitle = NULL, threshold = 0, abso
         group = -99
     }
 
-    if (is.null(title)) {
+    if (is.null(title) && "Section" %in% names(d) && "Group" %in% names(d)) {
         title = sprintf("Section %s, Group %d", section, group)
     }
 
@@ -109,7 +109,7 @@ plot_mic_plate <- function(d, title = NULL, subtitle = NULL, threshold = 0, abso
             Strain = unique(Strain)[1]
         ) %>%
         dplyr::arrange(Column)
-    strain_labels[strains$Column] <- strains$Strain
+    strain_labels[strains$Column] <- ifelse(strains$Strain == "NANA", "", strains$Strain)
 
     # Zero out any negative values
     d$Absorbance <- pmax(0, d$Absorbance)
@@ -128,7 +128,7 @@ plot_mic_plate <- function(d, title = NULL, subtitle = NULL, threshold = 0, abso
             sec.axis = dup_axis(labels = concentration_labels, name = "Concentration")
         ) +
         scale_fill_gradient(
-            limits = c(0, absorbance.max),
+            limits = c(0, absorbance_max),
             low = "#EEEEEE",
             high = "#000000",
             name = "Absorbance"

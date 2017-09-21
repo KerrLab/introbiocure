@@ -5,7 +5,7 @@
 \title{Make a MIC Plate Diagram}
 \usage{
 plot_mic_plate(d, title = NULL, subtitle = NULL, threshold = 0,
-  absorbance.max = 3, show.values = FALSE, show.unused = FALSE, ...)
+  absorbance_max = 3, show.values = FALSE, show.unused = FALSE, ...)
 }
 \arguments{
 \item{d}{A data frame containing absorbance and antibiotic data}
@@ -16,7 +16,7 @@ plot_mic_plate(d, title = NULL, subtitle = NULL, threshold = 0,
 
 \item{threshold}{Value above which values can be trusted. If a value is below the threshold, that well will be highlighted in red (default: \code{0}).}
 
-\item{absorbance.max}{Value to be set as the maximum possible absorbance. Useful for having consistent greyscale across many plots (default: \code{3}, which is approx. where the spex maxes out).}
+\item{absorbance_max}{Value to be set as the maximum possible absorbance. Useful for having consistent greyscale across many plots (default: \code{3}, which is approx. where the spex maxes out).}
 
 \item{show.values}{Whether or not to display the absorbance values for each well (default: \code{FALSE})}
 

@@ -16,11 +16,7 @@
 read_spec_data <- function(file, ...) {
     dSpec <- softermax::read_softmax6_xml(file = file) %>%
         tibble::as.tibble(platesAsFactors = FALSE, wellsAsFactors = FALSE) %>%
-        dplyr::mutate(
-            Row = as.integer(well_row(Well)),
-            Column = well_column(Well)
-        ) %>%
-        dplyr::select(Plate, Well, Row, Column, Absorbance = Value)
+        dplyr::select(Plate, Well, Absorbance = Value)
 
     # Get the data from control plates (if any)
     dControl <- dSpec %>%
@@ -28,7 +24,7 @@ read_spec_data <- function(file, ...) {
         dplyr::mutate(
             Drug = toupper(substring(Plate, 9, 11))
         ) %>%
-        dplyr::select(Drug, Well, Row, Column, Absorbance)
+        dplyr::select(Drug, Well, Absorbance)
     controls <- split(dControl, dControl$Drug)
 
     # Get the data from Group plates
@@ -40,8 +36,7 @@ read_spec_data <- function(file, ...) {
     # Merge in Section, Group, and Drug information
     dGroups <- dGroups %>%
         dplyr::left_join(plate_info, by = "Plate") %>%
-        dplyr::select(Drug, Section, Group, Well, Row, Column, Absorbance) %>%
-        dplyr::arrange(Drug, Section, Group, Row, Column)
+        dplyr::select(Drug, Section, Group, Well, Absorbance)
 
     # Combine the Group data and the Control data
     dAll <- dGroups %>%
@@ -53,13 +48,13 @@ read_spec_data <- function(file, ...) {
                 x %>%
                     dplyr::inner_join(
                         controls[[drug]],
-                        by = c("Drug", "Well", "Row", "Column"),
-                        suffixes = c(".group", ".control")
+                        by = c("Drug", "Well"),
+                        suffix = c(".group", ".control")
                     ) %>%
                     dplyr::mutate(
-                        Absorbance.Adj = Absorbance.x - Absorbance.y
+                        Absorbance.Adj = Absorbance.group - Absorbance.control
                     ) %>%
-                    dplyr::select(Drug, Section, Group, Well, Row, Column, Absorbance = Absorbance.x, Absorbance.Adj)
+                    dplyr::select(Drug, Section, Group, Well, Absorbance = Absorbance.group, Absorbance.Adj)
             } else {
                 dplyr::mutate(x, Absorbance.Adj = NA)
             }
