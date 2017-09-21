@@ -5,7 +5,8 @@
 \title{Make a MIC Plate Diagram}
 \usage{
 plot_mic_plate(d, title = NULL, subtitle = NULL, threshold = 0,
-  absorbance_max = 3, show.values = FALSE, show.unused = FALSE, ...)
+  absorbance_max = 3, show.values = FALSE, show.unused = FALSE,
+  well_size = 13, ...)
 }
 \arguments{
 \item{d}{A data frame containing absorbance and antibiotic data}
@@ -21,6 +22,8 @@ plot_mic_plate(d, title = NULL, subtitle = NULL, threshold = 0,
 \item{show.values}{Whether or not to display the absorbance values for each well (default: \code{FALSE})}
 
 \item{show.unused}{Whether or not to display unused wells. (default: \code{FALSE})}
+
+\item{well_size}{Size of points used to represent each well. You may need to tweak this. (default: \code{13})}
 
 \item{...}{Additional arguments (not currently used)}
 }

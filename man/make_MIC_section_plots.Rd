@@ -5,7 +5,7 @@
 \title{Create MIC Plate Diagrams for Class Data}
 \usage{
 make_MIC_section_plots(plate_data, path = ".", absorbance_max = 3,
-  make_section_dirs = TRUE)
+  make_section_dirs = TRUE, ...)
 }
 \arguments{
 \item{plate_data}{Data frame containing MIC assay data}
@@ -15,6 +15,8 @@ make_MIC_section_plots(plate_data, path = ".", absorbance_max = 3,
 \item{absorbance_max}{Value to be set as the maximum possible absorbance. Useful for having consistent greyscale across many plots (default: \code{3}, which is approx. where the spex maxes out).}
 
 \item{make_section_dirs}{Whether or not to create subdirectories for each section (default: \code{TRUE})}
+
+\item{...}{Additional arguments, passed to \code{\link{plot_mic_plate}}}
 }
 \description{
 Create MIC Plate Diagrams for Class Data

@@ -4,7 +4,7 @@
 \alias{make_MIC_control_plots}
 \title{Create MIC Plate Diagrams for Control Plates}
 \usage{
-make_MIC_control_plots(control_data, path = ".", absorbance_max = 3)
+make_MIC_control_plots(control_data, path = ".", absorbance_max = 3, ...)
 }
 \arguments{
 \item{control_data}{Data frame containing absorbance values for control plates}
@@ -12,6 +12,8 @@ make_MIC_control_plots(control_data, path = ".", absorbance_max = 3)
 \item{path}{Path in which to place plots (default: \code{"."}, the current working directory)}
 
 \item{absorbance_max}{Value to be set as the maximum possible absorbance. Useful for having consistent greyscale across many plots (default: \code{3}, which is approx. where the spex maxes out).}
+
+\item{...}{Additional arguments, passed to \code{\link{plot_mic_plate}}}
 }
 \description{
 Create MIC Plate Diagrams for Control Plates

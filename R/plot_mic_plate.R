@@ -29,6 +29,7 @@
 #' @param absorbance_max Value to be set as the maximum possible absorbance. Useful for having consistent greyscale across many plots (default: \code{3}, which is approx. where the spex maxes out).
 #' @param show.values Whether or not to display the absorbance values for each well (default: \code{FALSE})
 #' @param show.unused Whether or not to display unused wells. (default: \code{FALSE})
+#' @param well_size Size of points used to represent each well. You may need to tweak this. (default: \code{13})
 #' @param ... Additional arguments (not currently used)
 #'
 #' @return A \code{\link{ggplot2}} plot object
@@ -39,7 +40,7 @@
 #' \dontrun{
 #' plot_mic_plate(my_mic_data)
 #' }
-plot_mic_plate <- function(d, title = NULL, subtitle = NULL, threshold = 0, absorbance_max = 3, show.values = FALSE, show.unused = FALSE, ...) {
+plot_mic_plate <- function(d, title = NULL, subtitle = NULL, threshold = 0, absorbance_max = 3, show.values = FALSE, show.unused = FALSE, well_size = 13, ...) {
 
     assertthat::assert_that(
         is.data.frame(d),
@@ -138,7 +139,7 @@ plot_mic_plate <- function(d, title = NULL, subtitle = NULL, threshold = 0, abso
     p <- p + labs(title = title, subtitle = subtitle)
 
     # Add points for the data
-    p <- p + geom_point(aes(color = AboveThreshold), size = 16, shape = 21) +
+    p <- p + geom_point(aes(color = AboveThreshold), size = well_size, shape = 21) +
         scale_color_manual(values = c("TRUE" = "grey70", "FALSE" = "red"), guide = FALSE)
 
     if (show.values) {
@@ -151,7 +152,7 @@ plot_mic_plate <- function(d, title = NULL, subtitle = NULL, threshold = 0, abso
             dplyr::mutate(Well = as.factor(sprintf("%s%d", LETTERS[Row], Column))) %>%
             dplyr::anti_join(d, by = "Well")
 
-        p <- p + geom_point(data = unused, color = "grey70", fill = "white", size = 16, shape = 21)
+        p <- p + geom_point(data = unused, color = "grey70", fill = "white", size = well_size, shape = 21)
         p <- p + geom_point(data = unused, color = "grey70", fill = "grey70", shape = "x", size = 8)
     }
 
