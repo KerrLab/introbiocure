@@ -13,5 +13,5 @@ To install `introbiocure`, run the following commands in RStudio.
 
 ``` r
 if(!require("devtools")) install.packages("devtools")
-devtools::install_github("kerrlab/introbiocure", build_vignettes = TRUE)
+devtools::install_github("KerrLab/introbiocure", build_vignettes = TRUE)
 ```

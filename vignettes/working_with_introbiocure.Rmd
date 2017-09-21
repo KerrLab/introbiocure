@@ -2,7 +2,8 @@
 title: "Working with introbiocure"
 author: "Brian Connelly"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -26,7 +27,7 @@ After that, you can install `introbiocure` by executing this code in the *Consol
 
 ```{r Install introbiocure, eval=FALSE}
 install.packages("devtools")
-devtools::install_github("kerrlab/introbiocure", build_vignettes = TRUE)
+devtools::install_github("KerrLab/introbiocure", build_vignettes = TRUE)
 ```
 
 This will also install some additional packages that `introbiocure` requires.
@@ -72,6 +73,7 @@ As described in the next section, you should now protect the first row of data (
 This will help prevent errors from going undetected.
 
 Add the following data validation rules to these columns.
+
 - **Year**: Number, greater than or equal to 2017.
 - **Quarter**: List of items, "AU,WI,SP,SU UZZ"
 - **Section**: Text

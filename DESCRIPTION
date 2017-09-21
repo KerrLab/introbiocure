@@ -4,8 +4,9 @@ Title: Tools for Managing BIO 180 and BIO 200
 Version: 0.1.0
 Authors@R: c(person(given = "Brian", family = "Connelly", email = "bdc@bconnelly.net",
                     role = c("aut", "cre"))) 
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Tools for managing data from UW BIO 180 and BIO 200. This includes
+    creating Google Sheets for storing data for each section, combining data
+    from all sections, and retrieving data for analysis.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -17,8 +18,10 @@ Imports: assertthat,
     magrittr,
     purrr,
     readr,
+    softermax,
     stringi,
-    tibble
+    tibble,
+    tidyverse
 RoxygenNote: 6.0.1
 Suggests: knitr,
     rmarkdown
