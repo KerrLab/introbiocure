@@ -35,6 +35,7 @@ Plate name format:  "S([A-Za-z]{1,2})G([0-9]{1,2})-([A-Za-z]{3})" (Plate, Sectio
 
 TODO - xml
 
+
 ## Annotating MIC Data with Plate Maps
 
 Data from the spec only contains information about how cloudy each well in the microtiter plates are.
@@ -75,16 +76,68 @@ A good file name would include information about the antibiotic and when it is b
 ### Creating an Annotated Data Set
 
 Now we'll pull the data from the file exported by the spec, read the plate map, and combine the two into our annotated data set.
-We'll also extract section, group, and antibiotic information from the plate names.
+This process will also extract section, group, and antibiotic information from the plate names.
 
-```{r Read Spec XML File, eval=FALSE}
+First, start RStudio and load the `introbiocure` and `dplyr` packages.
+`dplyr` should have been automatically installed, but if it wasn't, run `install.packages("dplyr")`.
+
+```{r Script Start, eval=FALSE}
 library(introbiocure)
-
-dSpec <- read_spec_data(file = "my_xml_file.xml")
+library(dplyr)
 ```
 
+Now, let's load the non-annotated data from the XML file that we exported from the spec.
+You'll either need to set your working directory to the folder that contains the XML file, or supply the complete path in the file argument.
+Assuming that the XML file (called `BIO180-MIC-AU2018.xml`) is in our working directory:
 
-### TODO: RIF control plate, platemap, data
+```{r Reading the XML file, eval=FALSE}
+plate_data <- read_spec_data(file = "BIO180-MIC-AU2018.xml")
+```
+
+`plate_data` now contains the absorbance values for all wells in all plates, including control plates.
+But it does not contain any information about which strains, which drugs, or which concentrations are in each well.
+To add this information, we'll combine `plate_data` with our plate map.
+
+First, load the plate map using `load_platemaps`, giving it the name of the file(s) that contains your plate map(s).
+This function can load one or more plate maps.
+Usually, you will need one plate map for each drug used in your MIC assays.
+
+For this example, we only tested against rifampicin (RIF):
+
+```{r Loading plate maps A, eval=FALSE}
+plate_maps <- load_platemaps(RIF = "platemap-RIF.csv")
+```
+
+If we'd used both RIF and streptomycin (STR), we could do this:
+
+```{r Loading plate maps B, eval=FALSE}
+plate_maps <- load_platemaps(
+    RIF = "platemap-RIF.csv",
+    STR = "platemap-STR.csv"
+)
+```
+
+Notice how we put the corresponding 3-letter drug abbreviation on the left side of the `=` sign.
+
+Now that we have both the non-annotated data and plate map, we can combine the two, well by well.
+
+```{r Combining data and plate map, eval=FALSE}
+group_annotated <- annotate_data(d = plate_data$Groups, platemap = plate_maps)
+```
+
+We can do the same for our control data.
+For this, we'll also remove the strain (`Pro.or.Des` and `Drug.at.Isolation`) values from the resulting data, since control plates don't contain bacteria.
+
+```{r Combining data and plate map - control, eval=FALSE}
+controls_annotated <- annotate_data(d = plate_data$Controls, platemap = plate_maps) %>%
+    mutate(
+        Pro.or.Des = NA,
+        Drug.at.Isolation = NA
+    )
+```
+
+Now, both `group_annotated` and `controls_annotated` contain information about the cloudiness of each well in all of the plates and the strains, drug(s), and concentrations.
+
 
 ## Creating MIC Plate Diagrams
 
@@ -94,7 +147,12 @@ First, we want to make sure that we're using a consistent grey scale to indicate
 To do this, we'll find the maximum value seen among all plates:
 
 ```{r Find max absorbance, eval=FALSE}
-max_absorbance_seen <- max(controls_annotated$Absorbance, group_annotated$Absorbance, group_annotated$Absorbance.Adj, na.rm = TRUE)
+max_absorbance_seen <- max(
+    controls_annotated$Absorbance,
+    group_annotated$Absorbance,
+    group_annotated$Absorbance.Adj,
+    na.rm = TRUE
+)
 ```
 
 Now when we have R plot all of our plate diagrams, we can tell it that `max_absorbance_seen` is the highest value to expect.
@@ -103,7 +161,11 @@ These values will get the darkest shade of grey.
 Let's make the plate diagrams for the control plate(s):
 
 ```{r Plotting Control Plate Diagrams, eval=FALSE}
-make_MIC_control_plots(controls_annotated, path = "~/Desktop/MIC_Diagrams", absorbance_max = max_absorbance_seen)
+make_MIC_control_plots(
+    controls_annotated,
+    path = "~/Desktop/MIC_Diagrams",
+    absorbance_max = max_absorbance_seen
+)
 ```
 
 This will store the figures in the `MIC_Diagrams` folder on your desktop.
@@ -112,7 +174,11 @@ To change this, give `path` a different location.
 Similarly, we can make the plates for all of the groups:
 
 ```{r Plotting Group Plate Diagrams, eval=FALSE}
-make_MIC_section_plots(group_annotated, path = "~/Desktop/MIC_Diagrams", absorbance_max = max_absorbance_seen)
+make_MIC_section_plots(
+    group_annotated,
+    path = "~/Desktop/MIC_Diagrams",
+    absorbance_max = max_absorbance_seen
+)
 ```
 
 This will place the figures in the same folder.
@@ -134,22 +200,20 @@ plate_data <- read_spec_data(file = "BIO180-MIC-AU2018.xml")
 # Read our plate map CSV file(s), one per Drug
 plate_maps <- load_platemaps(
     RIF = "platemap-RIF.csv",
-    STR = "platemap-STR.csv"
+    STR = "platemap-STR.csv"  # Remove this line and the comma at the end of the last one if STR wasn't used
 )
 
+# Let's do the same for the data we read for each group
+group_annotated <- annotate_data(d = plate_data$Groups, platemap = plate_maps)
+
 # Now let's "annotate" our control plate data by combining it with the plate map(s)
-controls_annotated <- plate_data$Controls %>%
-    inner_join(plate_maps, by = c("Drug", "Well")) %>%
+# We'll also remove the strain information from the plate map, since control
+# plates don't include strains
+controls_annotated <- annotate_data(d = plate_data$Controls, platemap = plate_maps) %>%
     mutate(
-        Drug = as.factor(Drug),
-        Well = as.factor(Well),
         Pro.or.Des = NA,
         Drug.at.Isolation = NA
     )
-
-# Let's do the same for the data we read for each group
-group_annotated <- plate_data$Groups %>%
-    inner_join(platemaps, by = c("Drug", "Well"))
 
 # Find the maximum absorbance
 max_absorbance_seen <- max(
@@ -172,4 +236,5 @@ make_MIC_section_plots(
     path = "~/Desktop/MIC_Diagrams",
     absorbance_max = max_absorbance_seen
 )
+
 ```
