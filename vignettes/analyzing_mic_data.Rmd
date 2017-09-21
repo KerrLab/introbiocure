@@ -21,8 +21,7 @@ This document describes how data from the MIC lab is retrieved from the spectrop
 1. for each section, group, plate
     - create a new plate named Sxx-G-xx-xxx
     - Read the plate
-1. save the session
-1. export xml
+
 
 
 ## Reading Absorbance Data on the Spec
@@ -31,9 +30,28 @@ TODO
 
 Plate name format:  "S([A-Za-z]{1,2})G([0-9]{1,2})-([A-Za-z]{3})" (Plate, Section, Group, Drug)
 
+Once you've finished reading all of the plates, be sure to save your file once again to be safe.
+
 ## Exporting Absorbance Data
 
-TODO - xml
+In order to read the data into R for analysis, it's important to export the data as an XML file.
+To do this, click on the main menu (the microtiter plate icon in the upper left) and choose **Export**.
+
+![Exporting the data](img-mic/ss-softmax/softmax-export.png)
+
+On the next screen, we'll select which plates to export data for.
+If you notice plates that cannot be selected, this means that that do not have data.
+Make sure you've read those plates.
+Checking **All Plates** will select all plates that have data.
+
+Under *Output Format*, be sure to select **XML**.
+Once that's done, click the **OK** button.
+
+![Selecting Plates for Export](img-mic/ss-softmax/softmax-export-select.png)
+
+In the next screen, choose where to save the data (This PC > Documents > BIO 180 is a good place) and give it a good file name.
+If you'll be doing the analysis on another computer, keep the file in the BIO 180 folder, and create a second copy for yourself.
+You can transfer it using a thumb drive.
 
 
 ## Annotating MIC Data with Plate Maps
@@ -184,6 +202,9 @@ make_MIC_section_plots(
 This will place the figures in the same folder.
 By default, it will also create a new sub-folder for each group.
 
+Here's an example plate diagram:
+
+![Example plate diagram](img-mic/SA-G1-RIF.png)
 
 ### Putting it All Together
 
