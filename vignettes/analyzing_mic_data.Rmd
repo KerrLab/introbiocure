@@ -4,7 +4,7 @@ author: "Brian Connelly"
 #date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Analyzing MIC Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -26,11 +26,20 @@ This document describes how data from the MIC lab is retrieved from the spectrop
 
 ## Reading Absorbance Data on the Spec
 
-TODO
+First, load SoftMax Pro on the laptop attached to the spec.
 
-Plate name format:  "S([A-Za-z]{1,2})G([0-9]{1,2})-([A-Za-z]{3})" (Plate, Section, Group, Drug)
+TODO: create new session(?)
+
+TODO: set wavelength, etc.
+
+TODO: create all the plates
+
+TODO: save the file
+
+TODO: do the reads
 
 Once you've finished reading all of the plates, be sure to save your file once again to be safe.
+
 
 ## Exporting Absorbance Data
 
@@ -221,7 +230,8 @@ plate_data <- read_spec_data(file = "BIO180-MIC-AU2018.xml")
 # Read our plate map CSV file(s), one per Drug
 plate_maps <- load_platemaps(
     RIF = "platemap-RIF.csv",
-    STR = "platemap-STR.csv"  # Remove this line and the comma at the end of the last one if STR wasn't used
+    STR = "platemap-STR.csv"  # Remove this line and the comma at the
+                              # end of the last one if STR wasn't used
 )
 
 # Let's do the same for the data we read for each group
