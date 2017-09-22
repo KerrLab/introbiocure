@@ -15,28 +15,75 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This document describes how data from the MIC lab is retrieved from the spectrophotometer, annotated, analyzed, and plotted.
 
-1. Load SoftMax Pro
-1. Create a new Experiment file and save it as something good.
-1. Set wavelength, etc.
-1. for each section, group, plate
-    - create a new plate named Sxx-G-xx-xxx
-    - Read the plate
-
-
 
 ## Reading Absorbance Data on the Spec
 
 First, load SoftMax Pro on the laptop attached to the spec.
+If an empty project does not appear, click on the main menu (the microtiter plate in the upper left), and select **New**.
 
-TODO: create new session(?)
+### Read Settings
 
-TODO: set wavelength, etc.
+Now we're going to configure how SoftMax Pro reads the plates.
+Click on the **Settings** button in the top area.
 
-TODO: create all the plates
+![The Settings Button](img-mic/ss-softmax/softmax-settings-button.png)
+At the top of the Settings screen, make sure that **ABS** (absorbance) is selected under *Read Modes* and that **Endpoint** is selected under *Read Type*.
 
-TODO: save the file
+Next we'll look at some of the settings in the different **Category** menus to the left.
+First, select **Wavelengths** and set the machine to read at **595 nm**.
 
-TODO: do the reads
+![Setting the Read Wavelength](img-mic/ss-softmax/softmax-settings-wavelength.png)
+
+Under **Plate Type**, make sure to check **Is Lidded** and **96 Well Standard clrbtm [Landscape]** is selected.
+
+![Selecting Plate Type](img-mic/ss-softmax/softmax-setting-platetype.png)
+
+Under **Read Area**, make sure the whole plate is selected.
+
+![Setting the Read Area](img-mic/ss-softmax/softmax-settings-readarea.png)
+
+We now have all the important settings made, so hit the **OK** button.
+
+
+### Creating Plates
+
+Now we're going to create a Plate object for each of the microtiter plates that we'll be reading.
+We'll need one for each group and for each antibiotic control plate.
+You can view the existing plates on the left side of the screen.
+
+![Listing of the Plates](img-mic/ss-softmax/softmax-plate-area.png)
+
+By default, there will already be a plate called *Plate1*.
+You can either delete it (right click and select **Delete**) or rename it (right click and select **Rename**).
+
+![Renaming a Plate](img-mic/ss-softmax/softmax-plate-rename.png)
+
+**Naming Plates Correctly is EXTREMELY Important**
+
+Control plates should be named *Control-(Drug)*, where *(Drug)* is replaced with the three-letter drug abbreviation (e.g., *Control-RIF* or *Control-STR*).
+
+Group plates should be named *S(Section)-G(Group)-(Drug)* where *(Section)* is replaced by the section, *(Group)* is replaced by the group number, and *(Drug)* is replaced by the drug abbreviation.
+For example, use *SA-G1-RIF* for Section A, Group 1, Rifampicin.
+
+![Renaming a Plate with the correct format](img-mic/ss-softmax/softmax-plate-rename2.png)
+
+You can add plates by clicking on **New Plate** in the top area.
+
+![Creating a New Plate](img-mic/ss-softmax/softmax-plate-new.png)
+
+Once you're done creating all of the plates, save your file.
+
+
+### Reading the Plates
+
+When you're ready to read the plates, select the Plate object on the left hand side that corresponds with the Section/Group/Drug of the microtiter plate that you're ready to read.
+Put the plate in the machine and read it by hitting the **Read** button in the top area.
+
+![Read Button](img-mic/ss-softmax/softmax-read-button.png)
+
+Repeat this process for each microtiter plate, making sure to have the correct Plate object selected.
+The process doesn't happen to happen all at once.
+You can just read a batch, save the file, and do more reads.
 
 Once you've finished reading all of the plates, be sure to save your file once again to be safe.
 
