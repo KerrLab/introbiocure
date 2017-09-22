@@ -22,7 +22,7 @@ make_MIC_control_plots <- function(control_data, path = ".", absorbance_max = 3,
         dir.create(path)
     }
 
-    controls_annotated %>%
+    control_data %>%
         split(.$Drug) %>%
         purrr::walk(function(x) {
             drug = unique(x$Drug)

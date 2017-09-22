@@ -256,7 +256,7 @@ make_MIC_section_plots(
 ```
 
 This will place the figures in the same folder.
-By default, it will also create a new sub-folder for each group.
+By default, it will also create a new sub-folder for each section
 
 Here's an example plate diagram:
 
